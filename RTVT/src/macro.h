@@ -13,6 +13,7 @@
 
 //// Port definitions
 #define LCD_CTRL_PORT PORTA
+#define TFT_CTRL_PORT PORTA
 #define JTAG_PORT PORTB
 #define LCD_DATA_PORT PORTC 
 #define LCD_RST_PORT PORTD
@@ -46,20 +47,20 @@
 // TODO:- define setup pins and procedure for PWM setup
 
 //// Touch Screen Pins
-/*
+
 #define TFT_X_P_MASK 0x10		// Touch Screen X+ (pin 7)
-#define TFT_X_P_CLR LCD_CTRL_PORT &= ~TFT_X_P_MASK
-#define TFT_X_P_SET LCD_CTRL_PORT |= TFT_X_P_MASK
+#define TFT_X_P_CLR TFT_CTRL_PORT.OUT &= ~TFT_X_P_MASK
+#define TFT_X_P_SET TFT_CTRL_PORT.OUT |= TFT_X_P_MASK
 #define TFT_Y_P_MASK 0x20		// Touch Screen Y+ (pin 6)
-#define TFT_Y_P_CLR LCD_CTRL_PORT &= ~TFT_Y_P_MASK
-#define TFT_Y_P_SET LCD_CTRL_PORT |= TFT_Y_P_MASK
+#define TFT_Y_P_CLR TFT_CTRL_PORT.OUT &= ~TFT_Y_P_MASK
+#define TFT_Y_P_SET TFT_CTRL_PORT.OUT |= TFT_Y_P_MASK
 #define TFT_X_M_MASK 0x40		// Touch Screen X- (pin 5)
-#define TFT_X_M_CLR LCD_CTRL_PORT &= ~TFT_X_M_MASK
-#define TFT_X_M_SET LCD_CTRL_PORT |= TFT_X_M_MASK
+#define TFT_X_M_CLR TFT_CTRL_PORT.OUT &= ~TFT_X_M_MASK
+#define TFT_X_M_SET TFT_CTRL_PORT.OUT |= TFT_X_M_MASK
 #define TFT_Y_M_MASK 0x80		// Touch Screen Y- (pin 4)
-#define TFT_Y_M_CLR LCD_CTRL_PORT &= ~TFT_Y_M_MASK
-#define TFT_Y_M_SET LCD_CTRL_PORT |= TFT_Y_M_MASK
-*/
+#define TFT_Y_M_CLR TFT_CTRL_PORT.OUT &= ~TFT_Y_M_MASK
+#define TFT_Y_M_SET TFT_CTRL_PORT.OUT |= TFT_Y_M_MASK
+
 //// SD Card / SPI
 #define SPI_CS_BM 0x10
 #define SPI_CD_BM 0x08

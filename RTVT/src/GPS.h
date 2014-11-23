@@ -12,11 +12,12 @@
 #define GPS_H_
 #include "integer.h"
 #include "uart_driver.h"
+#include "LCD_Driver.h"
 #include "stdlib.h"
 #include <util/delay.h>
 #include <stdio.h>
 #include <string.h>
-#define MAX_RESP_SIZE 128
+#include <stdint.h>
 
 namespace NMEA {
 	enum CMD {
@@ -29,23 +30,38 @@ namespace NMEA {
 		ZDA_DAT_TIM
 	};
 }
+namespace GPSVAL {
+	enum VAL {
+		FIX_TIME,
+		STATUS,
+		LAT,
+		NS,
+		LONG,
+		EW,
+		SPEED,
+		COURSE,
+		DATE
+	};
+}
 
 class GPS {
 private:
 	//Response double buffering
-	char buffer[2][MAX_RESP_SIZE];
-	BYTE buffptr = 0;
-	BYTE windex = 0;
-	bool dataReady = false;
-	bool readlock = false;
+	uint8_t offsets[11] = {0,10,11,22,23,34,35,41,47,53,59};
+	uint8_t sizes[10] = {10,1,11,1,11,1,6,6,6,6};
+	uint16_t status_reg;
+	char buffer[59];
+	uint8_t dataReady = 0;
 	UartDriver uart;
 	char * cmdToString(NMEA::CMD cmd, char * buff3);
 public:
 	GPS();
 	void init();
 	void setPeriodic(NMEA::CMD cmd, BYTE rate);
-	char * getMostRecent(char * dest);
-	char interceptByte();
+	uint16_t getStatus();
+	void vomit(LCD_Driver * lcd);
+	void updateRegisters();
+	void interceptByte();
 	void handleDRE();
 };
 

@@ -45,9 +45,13 @@ C_SRCS +=  \
 ../src/glcdfont.c \
 ../src/GPS.cpp \
 ../src/LCD_Driver.cpp \
+../src/MainScreen.cpp \
+../src/OBDConversion.cpp \
 ../src/RTVT.cpp \
+../src/Screen.cpp \
 ../src/SDCard.cpp \
 ../src/SPI_Driver.cpp \
+../src/Touch.cpp \
 ../src/uart_driver.cpp
 
 
@@ -66,9 +70,13 @@ src/ff.o \
 src/glcdfont.o \
 src/GPS.o \
 src/LCD_Driver.o \
+src/MainScreen.o \
+src/OBDConversion.o \
 src/RTVT.o \
+src/Screen.o \
 src/SDCard.o \
 src/SPI_Driver.o \
+src/Touch.o \
 src/uart_driver.o
 
 OBJS_AS_ARGS +=  \
@@ -80,9 +88,13 @@ src/ff.o \
 src/glcdfont.o \
 src/GPS.o \
 src/LCD_Driver.o \
+src/MainScreen.o \
+src/OBDConversion.o \
 src/RTVT.o \
+src/Screen.o \
 src/SDCard.o \
 src/SPI_Driver.o \
+src/Touch.o \
 src/uart_driver.o
 
 C_DEPS +=  \
@@ -94,9 +106,13 @@ src/ff.d \
 src/glcdfont.d \
 src/GPS.d \
 src/LCD_Driver.d \
+src/MainScreen.d \
+src/OBDConversion.d \
 src/RTVT.d \
+src/Screen.d \
 src/SDCard.d \
 src/SPI_Driver.d \
+src/Touch.d \
 src/uart_driver.d
 
 C_DEPS_AS_ARGS +=  \
@@ -108,9 +124,13 @@ src/ff.d \
 src/glcdfont.d \
 src/GPS.d \
 src/LCD_Driver.d \
+src/MainScreen.d \
+src/OBDConversion.d \
 src/RTVT.d \
+src/Screen.d \
 src/SDCard.d \
 src/SPI_Driver.d \
+src/Touch.d \
 src/uart_driver.d
 
 OUTPUT_FILE_PATH +=RTVT.elf
@@ -124,6 +144,14 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
+
+
 
 
 

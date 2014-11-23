@@ -16,12 +16,15 @@
 #include "SPI_Driver.h"
 #include "uart_driver.h"
 #include "GPS.h"
+#include "Touch.h"
+#include "MainScreen.h"
 #include <ff.h>
-
 BTOBD * OBDref;
 LCD_Driver * LCDref;
 GPS * GPSref;
-// Utilizes USARTD0 for bluetooth receive
+Touch * Touchref;
+// Utilizes USARTD0 for Bluetooth receive
+
 
 ISR(USARTD0_RXC_vect)
 {
@@ -49,6 +52,20 @@ ISR(BADISR_vect) {
 ISR(SPIE_INT_vect) {
 	
 }
+
+
+
+ISR(TCC0_CCA_vect)
+{
+	//Reset the timer
+	TCC0.CNT = 0;
+
+	Touchref->process();
+	
+	if (Touchref->getX() > 0x0400 || Touchref->getY() > 0x0400) PORTF.OUTSET = 0x01;
+	else PORTF.OUTCLR = 0x01;
+}
+
 void setClockTo2MHz()
 {
 	CCP = CCP_IOREG_gc;
@@ -78,53 +95,92 @@ FRESULT open_append(FIL * fp, const char * path) {
 	return fr;
 }
 
+
 int main(void)
 {
 	asm("cli");
 	setClockTo32MHz();
-		PORTD.OUT = 0x88;
-		PORTD.DIR = 0x88;
-		PORTE.DIR = 0xB0;
-	LCD_Driver LCD;
-	LCDref = &LCD;
-		LCD.begin();
-		LCD.fillScreen(0xFFFF);
-		LCD.setCursor(0,0);
-		LCD.setTextColor(0x0000, 0xFFFF);
-		LCD.setTextSize(2);
-		LCD.setTextWrap(true);
-	//SPI_Driver spi(&SPIE);
-	//spi.enable();
-	/*UartDriver BluT(64);// = new UartDriver(64); //64 character buffer, rx and tx
-	BluT.init(&USARTD0, ParityMode::DISABLED, CharSize::EIGHT, false, 12, 0x40); // 9600 bps*/
-	GPS GPSModule;
-	GPSref = &GPSModule;
 	_delay_ms(1000);
 
+	// Set pins as outputs
+	PORTD.OUT = 0x88;
+	PORTD.DIR = 0x88;
+	PORTE.DIR = 0xB0;
+	PORTF.DIR = 0x01;
+
+	// LCD setup
+	LCD_Driver LCD;
+	LCDref = &LCD;
+	LCD.begin();
+	LCD.fillScreen(0x0000);
+	LCD.setRotation(3);
+	LCD.setCursor(0,0);
+	LCD.setTextColor(0xFFFF, 0x0000);
+	LCD.setTextSize(2);
+	LCD.setTextWrap(true);
+
+	// Touch setup
+	//Touch toucj;
+	//Touchref = &toucj;
+	//_delay_ms(1000);
+	
+	// GPS setup
+	GPS GPSModule;
+	GPSref = &GPSModule;
+
+	// BT setup
 	//BTOBD OBDModule;
+	//OBDref = &OBDModule;
 
 	PMIC.CTRL |= 0x07;
 	asm("sei");
-	_delay_ms(500);
-	GPSModule.init();
-	while(1){}
-	/*while (1) {
-		for (int i = 0; i < 64; i++) spi.put(i);
+	//MainScreen ms(LCDref);
+	//ms.clear();
+
+	//bool send = true;
+	//OBDModule.vomit(LCDref);
+	//OBDModule.initialize("000666643F8F", LCDref);
+	/*while (1) 
+	{
+	    if (send) {
+		OBDModule.sendCmd();
+		}
+		send = OBDModule.rcvResp();
+		ms.update(OBDref);
+		/*if (OBDModule.getStatus())
+		{
+		    //OBDModule.clearStatus();
+		    //OBDModule.vomit(LCDref);
+		}
 	}*/
+
+	GPSModule.init();
+	while (1) {
+		GPSModule.updateRegisters();
+		GPSModule.vomit(LCDref);
+	}
 	
-	/*FRESULT fr;
-	FATFS fs;
-	FIL fil;
+	//FRESULT fr;
+	//FATFS fs;
+	//FIL fil;
+	//int err;
 
-	f_mount(&fs, "", 0);
-	fr = open_append(&fil, "logfile.txt");
-	if (fr != FR_OK) return 1;
-	f_puts("HELLO MOFOS\n", &fil);
-	f_close(&fil);*/
-	/*OBDref = &OBDModule;
-	OBDModule.initialize("000666643F8F", LCDref);
+	//f_mount(&fs, "", 0);
 
-	while (1) { while(!OBDModule.rxIsEmpty()) LCD.write(OBDModule.rxDequeue()); }*/
+	//fr = open_append(&fil, "test.txt");
+	//if (fr != FR_OK) return 1;
+	//err = f_puts((TCHAR *) "abcdefghijklmnopqrstuvwxyz\nabcdefghijklmnopqrstuvwxyz\nabcdefghijklmnopqrstuvwxyz\n", &fil);
+	//if (err == -1) return 2;
+	//f_close(&fil);
 
-	
+	//while (1) { if (!OBDModule.rxIsEmpty()) LCD.write(OBDModule.rxDequeue()); }
 }
+
+
+
+/*
+int main()
+{
+    while (1);
+}
+*/

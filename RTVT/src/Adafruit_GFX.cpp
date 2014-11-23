@@ -417,7 +417,7 @@ void Adafruit_GFX::write(uint8_t c) {
 #endif
   if (c == '\n') {
     cursor_y += textsize*8;
-    cursor_x  = 0;
+    cursor_x  = left_bound;
   } else if (c == '\r') {
     // skip em
   } else {
@@ -471,6 +471,7 @@ void Adafruit_GFX::drawChar(int16_t x, int16_t y, unsigned char c,
 void Adafruit_GFX::setCursor(int16_t x, int16_t y) {
   cursor_x = x;
   cursor_y = y;
+  left_bound = x;
 }
 
 void Adafruit_GFX::setTextSize(uint8_t s) {

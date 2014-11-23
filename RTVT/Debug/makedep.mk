@@ -18,11 +18,19 @@ src\GPS.cpp
 
 src\LCD_Driver.cpp
 
+src\MainScreen.cpp
+
+src\OBDConversion.cpp
+
 src\RTVT.cpp
+
+src\Screen.cpp
 
 src\SDCard.cpp
 
 src\SPI_Driver.cpp
+
+src\Touch.cpp
 
 src\uart_driver.cpp
 

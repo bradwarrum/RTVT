@@ -81,7 +81,7 @@
 
 	if (ty) {
 		Stat &= ~STA_NOINIT;
-		spi.clockRate(0x81); //4MHz
+		//spi.clockRate(0x81); //4MHz
 	}
 	return Stat;
 

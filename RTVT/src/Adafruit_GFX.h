@@ -82,7 +82,8 @@ class Adafruit_GFX /*: public Print*/ {
     WIDTH, HEIGHT;   // This is the 'raw' display w/h - never changes
   int16_t
     _width, _height, // Display w/h as modified by current rotation
-    cursor_x, cursor_y;
+    cursor_x, cursor_y, left_bound;
+
   uint16_t
     textcolor, textbgcolor;
   uint8_t

@@ -7,73 +7,59 @@
 
 
 #include "BTOBD.h"
+#include "OBDConversion.h"
 
 // default constructor
-BTOBD::BTOBD() : driver(5, 128)
+BTOBD::BTOBD() : driver(128, 128)
 {
 	//driver.init(&USARTD0, ParityMode::DISABLED, CharSize::EIGHT, false, 12, 0x40); // 9600 bps
 	driver.init(&USARTD0, ParityMode::DISABLED, CharSize::EIGHT, false, 33, 0xF0); // 115200 bps
-	inCMDMode = false;
-	connected = false;
-	status_reg=0;
-	/*
-	cmd_resp_size[0] = 5;
-	cmd_resp_size[1] = 15;
-	cmd_resp_size[2] = 3;
-	cmd_resp_size[3] = 5;*/
+	responses = 0;
+	status_reg = 0;
+	cmdcount = 0;
+	cmdlock = -1;
 
+	for (int i = 0; i < 36; i++) buffer[i] = '0';
+	//Configure timer
+	TCC1.CTRLA = 0x00; //Off at first
+	TCC1.CTRLB = 0x10; //CCA on, no waveform generation
+	TCC1.CCA = 1000; //Check approximately at 4 Hz
+	TCC1.INTCTRLB = 0x00; //Disable CCA interrupts
+
+	TCC1.CTRLA = 0x07; // Prescaler /1024
 } //BTOBD
 char BTOBD::interceptByte() {
 	char c = driver.getUARTPort()->DATA;
 	driver.rcvByte(c);
+	if (c == '\n') this->responses ++;
 	return c;
 }
 
 void BTOBD::handleDRE() {
 	if (!driver.txIsEmpty()) {
 		driver.getUARTPort()->DATA = driver.txDequeue();
-		} else {
+	} else {
 		driver.getUARTPort()->CTRLA &= ~(0x03); //Disable DREint
 	}
 }
 
 bool BTOBD::initialize(LCD_Driver * LCD) {
+    int count = 0;
+
 	sendCmd(OBDCMDS::ENTERCMDMODE);
 	waitForNewline(LCD);
-	/*
-	sendCmd(OBDCMDS::INQUIRY);
-	for (int i = 0; i<200; i++) {
-		_delay_ms(100);
-		while(!driver.rxIsEmpty()) {
-			LCD->write(driver.rxDequeue());
+	do {
+		count = 0;
+		sendCmd(OBDCMDS::CONNECT);
+		for (int i = 0; i<100; i++) {
+			_delay_ms(100);
+			while(!driver.rxIsEmpty()) {
+				char c = driver.rxDequeue();
+				//LCD->write(c);
+				if (c == '\n') count++;
+			}
 		}
-	}
-	*/
-	sendCmd(OBDCMDS::CONNECT);
-	for (int i = 0; i<100; i++) {
-		_delay_ms(100);
-		while(!driver.rxIsEmpty()) {
-			LCD->write(driver.rxDequeue());
-		}
-	}
-	sendCmd(OBDCMDS::ENTERCMDMODE);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::GETSTATUS);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::EXITCMDMODE);
-	waitForNewline(LCD);
-	/*
-	sendCmd(OBDCMDS::EXITCMDMODE);
-	while (1) 
-	{
-	    if (!driver.rxIsEmpty())
-		{
-	        char c = driver.rxDequeue();
-		    LCD->write(c);
-		    if (c == '\n') break;
-		}
-	}
-	*/
+	} while (count != 1);
 	sendCmd(OBDCMDS::ELM_ATI);
 	waitForNewline(LCD);
 	sendCmd(OBDCMDS::ELM_ATZ);
@@ -86,7 +72,8 @@ bool BTOBD::initialize(LCD_Driver * LCD) {
 	waitForNewline(LCD);
 	sendCmd(OBDCMDS::ELM_ATSP0);
 	waitForNewline(LCD);
-	asm("NOP");
+	responses = 0;
+
 	return true;
 }
 bool BTOBD::initialize(char * address, LCD_Driver * LCD) {
@@ -101,21 +88,23 @@ void BTOBD::waitForNewline(LCD_Driver * LCD) {
 		if (!driver.rxIsEmpty())
 		{
 			char c = driver.rxDequeue();
-			LCD->write(c);
+			//LCD->write(c);
 			if (c == '\n') break;
 		}
+		asm("NOP");
 	}
 }
 
 void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
-	//current_resp_size = 0;
-	//expected_resp_size = cmd_resp_size[cmd];
+	this->currcmd = cmd;
+
 	switch (cmd) {
 		case OBDCMDS::ENTERCMDMODE:
 			driver.sendByte('$');
 			driver.sendByte('$');
 			driver.sendByte('$'); break;
 		case OBDCMDS::EXITCMDMODE:
+			//driver.sendByte('\n');
 			driver.sendByte('-');
 			driver.sendByte('-');
 			driver.sendByte('-');
@@ -173,117 +162,228 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('0');
-			driver.sendByte('c');
-			driver.sendByte('\n'); break;
+			driver.sendByte('C');
+			driver.sendByte('\n');
+			this->currupper = '0';
+			this->currlower = 'C'; 
+			break;
 		case OBDCMDS::SPEED:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('0');
-			driver.sendByte('d');
-			driver.sendByte('\n'); break;
+			driver.sendByte('D');
+			driver.sendByte('\n');
+			this->currupper = '0';
+			this->currlower = 'D';
+			break;
 		case OBDCMDS::THROTTLE_POS:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('1');
 			driver.sendByte('1');
-			driver.sendByte('\n'); break;
+			driver.sendByte('\n');
+			this->currupper = '1';
+			this->currlower = '1';
+			break;
 		case OBDCMDS::OIL_TEMP:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('5');
 			driver.sendByte('C');
-			driver.sendByte('\n'); break;
+			driver.sendByte('\n');
+			this->currupper = '5';
+			this->currlower = 'C'; 
+			break;
 		case OBDCMDS::FUEL_RATE:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('5');
 			driver.sendByte('E');
-			driver.sendByte('\n'); break;
+			driver.sendByte('\n'); 
+			this->currupper = '5';
+			this->currlower = 'E';
+			break;
 		case OBDCMDS::COOLANT_TEMP:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('6');
 			driver.sendByte('7');
-			driver.sendByte('\n'); break;
+			driver.sendByte('\n'); 
+			this->currupper = '6';
+			this->currlower = '7';
+			break;
 		case OBDCMDS::ENGINE_LOAD:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('0');
 			driver.sendByte('4');
-			driver.sendByte('\n'); break;
+			driver.sendByte('\n'); 
+			this->currupper = '0';
+			this->currlower = '4';
+			break;
 		case OBDCMDS::FUEL_LEVEL:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('2');
 			driver.sendByte('F');
-			driver.sendByte('\n'); break;
+			driver.sendByte('\n'); 
+			this->currupper = '2';
+			this->currlower = 'F';
+			break;
 		case OBDCMDS::MANIFOLD_AIR_PRESSURE:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('8');
 			driver.sendByte('7');
-			driver.sendByte('\n'); break;
-		case OBDCMDS::MANIFOLD_SURFACE_TEMP:
-			driver.sendByte('0');
-			driver.sendByte('1');
-			driver.sendByte('8');
-			driver.sendByte('4');
-			driver.sendByte('\n'); break;			
+			driver.sendByte('\n'); 
+			this->currupper = '8';
+			this->currlower = '7';
+			break;			
 		case OBDCMDS::AMBIENT_TEMP:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('4');
 			driver.sendByte('6');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '4';
+			this->currlower = '6';
+			break;	
 		case OBDCMDS::BAROMETRIC_PRESSURE:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('3');
 			driver.sendByte('3');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '3';
+			this->currlower = '3';
+			break;	
 		case OBDCMDS::FUEL_RAIL_PRESSURE:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('5');
 			driver.sendByte('9');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '5';
+			this->currlower = '9';
+			break;	
 		case OBDCMDS::INTAKE_AIR_TEMP:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('6');
 			driver.sendByte('8');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n');
+			this->currupper = '6';
+			this->currlower = '8';
+			break;	
 		case OBDCMDS::PID_SUPPORT_1_20:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('0');
 			driver.sendByte('0');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '0';
+			this->currlower = '0';
+			break;	
 		case OBDCMDS::PID_SUPPORT_21_40:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('2');
 			driver.sendByte('0');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '2';
+			this->currlower = '0';
+			break;	
 		case OBDCMDS::PID_SUPPORT_41_60:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('4');
 			driver.sendByte('0');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '4';
+			this->currlower = '0';
+			break;	
 		case OBDCMDS::PID_SUPPORT_61_80:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('6');
 			driver.sendByte('0');
-			driver.sendByte('\n'); break;	
+			driver.sendByte('\n'); 
+			this->currupper = '6';
+			this->currlower = '0';
+			break;	
 		case OBDCMDS::PID_SUPPORT_81_A0:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('8');
 			driver.sendByte('0');
-			driver.sendByte('\n');	
+			driver.sendByte('\n');
+			this->currupper = '8';
+			this->currlower = '0';	
 	}
+}
+
+bool BTOBD::rcvResp()
+{
+    bool rcv = false;
+
+	while (responses)
+	{
+	    char upper, lower;
+		uint8_t same = 0;
+
+	    driver.rxDequeue();
+		driver.rxDequeue();
+		driver.rxDequeue();
+		upper = driver.rxDequeue();
+		lower = driver.rxDequeue();
+		driver.rxDequeue();
+
+		if (upper != this->currupper || lower != this->currlower) 
+		{
+		    while(driver.rxDequeue() != '\n' && !driver.rxIsEmpty());
+		}
+		else if (cmdlock != (int8_t)currcmd)
+		{
+		    for (int i = offsets[currcmd]; i < offsets[currcmd] + sizes[currcmd]; i++)
+		    {
+			    char c = driver.rxDequeue();
+				if (c == ' ') { i--; continue; }
+				
+				if (buffer[i] == c) same++;
+			    else buffer[i] = c;
+		    }
+			while(driver.rxDequeue() != '\n' && !driver.rxIsEmpty());
+			if (same != sizes[currcmd]) this->status_reg |= (1 << currcmd);
+		}
+
+		asm("cli");
+		responses--;
+		asm("sei");
+		rcv = true;
+	}
+
+	return rcv;
+}
+
+uint16_t BTOBD::getStatus() { return this->status_reg; }
+
+void BTOBD::clearStatus() { this->status_reg = 0; }
+
+void BTOBD::vomit(LCD_Driver * LCD)
+{
+    for (int i = 0; i < 32; i++) LCD->write(buffer[i]);
+	LCD->write('\n');
+	char buf[12];
+	LCD->writeStr(itoa(OBDConversion::speed(buffer[0], buffer[1]), buf, 10));
+	LCD->write('\n');
+	LCD->writeStr(itoa(OBDConversion::rpm(buffer[2], buffer[3], buffer[4], buffer[5]), buf, 10));
+	LCD->write('\n');
+}
+
+void BTOBD::sendCmd()
+{
+    sendCmd(this->cmdorder[this->cmdcount]);
+	if (++cmdcount == 13) cmdcount = 0;
 }
 
 bool BTOBD::rxIsEmpty() {
@@ -292,4 +392,18 @@ bool BTOBD::rxIsEmpty() {
 
 char BTOBD::rxDequeue() {
 	return driver.rxDequeue();
+}
+
+CBUFFER BTOBD::getRecent(OBDCMDS::CMD cmd) {
+	CBUFFER returnval;
+	uint8_t cint = offsets[cmd];
+	cmdlock = (int8_t) cmd;
+	returnval.au = buffer[cint++];
+	returnval.al = buffer[cint++];
+	if (sizes[cmd] == 4) {
+		returnval.bu = buffer[cint++];
+		returnval.bl = buffer[cint++];
+	}
+	cmdlock = -1;
+	return returnval;
 }

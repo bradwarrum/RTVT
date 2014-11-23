@@ -6,8 +6,10 @@
  */ 
  #include "GPS.h"
 
- GPS::GPS() : uart(128, 8) {
+ GPS::GPS() : uart(220, 80) {
  	uart.init(&USARTD1, ParityMode::DISABLED, CharSize::EIGHT, false, 12, 0x50);//4800 baud
+	status_reg = 0;
+	for (uint8_t i = 0; i < 59; i++) buffer[i] = '\0';
  };
 
  void GPS::init() {
@@ -21,7 +23,7 @@
 	_delay_ms(100);
 	setPeriodic(NMEA::GSA_OVRL_SATDATA, 0);
 	_delay_ms(100);
-	setPeriodic(NMEA::RMC_REC_MIN_DATA, 3);
+	setPeriodic(NMEA::RMC_REC_MIN_DATA, 2);
 	_delay_ms(100);
 	setPeriodic(NMEA::VTG_VECT_TRCK, 0);
 	_delay_ms(100);
@@ -72,32 +74,54 @@
 	return buff3;
  }
 
- char GPS::interceptByte() {
+ void GPS::interceptByte() {
 	 char c = this->uart.getUARTPort()->DATA;
-	 //driver.rcvByte(c);
-	 if(c != '\n') 
-		buffer[buffptr][windex++] = c;
-	 else {
-		if (!readlock) {
-			 buffer[buffptr][windex] = '\0';
-			 buffptr = (buffptr == 0) ? 1 : 0;
-			 dataReady = true;
-		}
-		windex = 0;
-
+	 uart.rcvByte(c);
+	 if(c == '\n') {
+		dataReady++;
 	 }
-	 return c;
  }
 
- char * GPS::getMostRecent(char * dest) {
-	if (!dataReady) return nullptr;
-	readlock = true;
-	BYTE rptr = (buffptr == 0) ? 1 : 0;
-	strcpy(dest, buffer[buffptr]);
-	readlock = false;
-	dataReady = false;
-	return dest;
- }
+void GPS::updateRegisters() {
+	if (!dataReady) return;
+	while (dataReady > 1) {
+		while (uart.rxDequeue() != '\n');
+		asm("cli");
+		dataReady--;
+		asm("sei");
+	}
+	char c;
+	uint8_t wptr;
+	for(uint8_t cmd = 0; cmd < 10; cmd++) {
+		wptr = offsets[cmd];
+		while ((c = uart.rxDequeue()) != ',') {
+			if (buffer[wptr] != c) status_reg |= (1 << cmd);
+			buffer[wptr++] = c;
+		}
+		while (wptr < offsets[cmd +1]) {
+			if (buffer[wptr] != '\0') status_reg |= (1 << cmd);
+			buffer[wptr++] = '\0';
+		}
+	}
+	while (uart.rxDequeue() != '\n');
+
+	asm("cli");
+	dataReady--;
+	asm("sei");
+}
+uint16_t GPS::getStatus() {
+	return status_reg;
+}
+
+void GPS::vomit(LCD_Driver * lcd) {
+	if (!status_reg) return;
+	status_reg = 0;
+	for (uint8_t i = 0; i<59; i++) {
+		lcd->write(buffer[i]);
+	}
+	lcd->write('\n');
+
+}
 
  void GPS::handleDRE() {
 	 if (!uart.txIsEmpty()) {

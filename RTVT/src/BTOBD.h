@@ -13,10 +13,31 @@
 #include "uart_driver.h"
 #include "LCD_Driver.h"
 #include <util/delay.h>
+#include <avr/io.h>
 #include "macro.h"
-#define NUMCMDS 4
+
+typedef struct {
+	char au;
+	char al;
+	char bu;
+	char bl;
+} CBUFFER;
+
 namespace OBDCMDS {
 	enum CMD {
+	    SPEED,
+	    RPM,
+	    THROTTLE_POS,
+	    OIL_TEMP,
+	    FUEL_RATE,
+	    COOLANT_TEMP,
+	    ENGINE_LOAD,
+	    FUEL_LEVEL,
+	    MANIFOLD_AIR_PRESSURE,
+	    AMBIENT_TEMP,
+	    BAROMETRIC_PRESSURE,
+	    FUEL_RAIL_PRESSURE,
+	    INTAKE_AIR_TEMP,
 		ENTERCMDMODE,
 		CONNECT,
 		INQUIRY,
@@ -28,20 +49,6 @@ namespace OBDCMDS {
 		ELM_ATH0,
 		ELM_ATS1,
 		ELM_ATSP0,
-		SPEED,
-		RPM,
-		THROTTLE_POS,
-		OIL_TEMP,
-		FUEL_RATE,
-		COOLANT_TEMP,
-		ENGINE_LOAD,
-		FUEL_LEVEL,
-		MANIFOLD_AIR_PRESSURE,
-		MANIFOLD_SURFACE_TEMP,
-		AMBIENT_TEMP,
-		BAROMETRIC_PRESSURE,
-		FUEL_RAIL_PRESSURE,
-		INTAKE_AIR_TEMP,
 		PID_SUPPORT_1_20,
 		PID_SUPPORT_21_40,
 		PID_SUPPORT_41_60,
@@ -56,14 +63,20 @@ class BTOBD
 private: 
 	UartDriver driver;
 	char bt_addr[12];
-	bool inCMDMode;
-	bool connected;
-	uint8_t cmd_resp_size[NUMCMDS];
-	uint8_t expected_resp_size, current_resp_size;
-	uint8_t status_reg;
-	void sendCmd(OBDCMDS::CMD cmd);
+	uint16_t status_reg;
+	uint8_t sizes[13] =   {2, 4, 2, 2, 4, 2, 2, 2, 2, 2, 2, 4, 2};
+	uint8_t offsets[13] = {0, 2, 6, 8,10,14,16,18,20,22,24,26,30};
+	OBDCMDS::CMD cmdorder[13] = {OBDCMDS::SPEED, OBDCMDS::RPM, OBDCMDS::THROTTLE_POS, OBDCMDS::OIL_TEMP, OBDCMDS::FUEL_RATE, 
+	                             OBDCMDS::COOLANT_TEMP, OBDCMDS::ENGINE_LOAD, OBDCMDS::FUEL_LEVEL, OBDCMDS::MANIFOLD_AIR_PRESSURE,
+								 OBDCMDS::AMBIENT_TEMP, OBDCMDS::BAROMETRIC_PRESSURE, OBDCMDS::FUEL_RAIL_PRESSURE, 
+								 OBDCMDS::INTAKE_AIR_TEMP};
+	char buffer[32];
+	volatile uint8_t cmdlock;
+	OBDCMDS::CMD currcmd;
+	char currupper, currlower;
+	volatile uint8_t responses;
+	int8_t cmdcount;
 	void waitForNewline(LCD_Driver * LCD);
-
 
 public:
 	BTOBD();
@@ -73,6 +86,13 @@ public:
 	void handleDRE();
 	bool rxIsEmpty();
 	char rxDequeue();
+	void sendCmd();
+	void sendCmd(OBDCMDS::CMD cmd);
+	bool rcvResp();
+	uint16_t getStatus();
+	void clearStatus();
+	void vomit(LCD_Driver * LCD);
+	CBUFFER getRecent(OBDCMDS::CMD cmd);
 }; //BTOBD
 
 #endif //__BTOBD_H__

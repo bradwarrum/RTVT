@@ -137,18 +137,34 @@ void LCD_Driver::reset()
   CS_IDLE;
 }
 
+void LCD_Driver::setRotation(uint8_t x)
+{
+    Adafruit_GFX::setRotation(x);
+	CS_ACTIVE;
+
+	uint8_t t;
+	switch (rotation)
+	{
+	    case 0: t = HX8357B_MADCTL_MX | HX8357B_MADCTL_MY | HX8357B_MADCTL_RGB; break;
+		case 1: t = HX8357B_MADCTL_MY | HX8357B_MADCTL_MV | HX8357B_MADCTL_RGB; break;
+		case 2: t = HX8357B_MADCTL_RGB; break;
+		case 3: t = HX8357B_MADCTL_MX | HX8357B_MADCTL_MV | HX8357B_MADCTL_RGB; break;
+	}
+
+	CD_COMMAND;
+	writeData(ILI9341_MADCTL);
+	CD_DATA;
+	writeData(t);
+	setAddrWindow(0, 0, _width-1, _height-1);
+}
+
 void LCD_Driver::drawPixel(int16_t x, int16_t y, uint16_t color)
 {
-	if((x < 0) || (y < 0) || (x >= (uint16_t)_width) || (y >= (uint16_t)_height))
-	{
-		return;
-	}
+	if((x < 0) || (y < 0) || (x >= _width) || (y >= _height)) return;
 	CS_ACTIVE;
-	setAddrWindow(x, y,_width-1, _height-1);
+	setAddrWindow(x, y, _width-1, _height-1);
 	CS_ACTIVE;
 	CD_COMMAND;
-
-
 	writeData(0x2C);
 	CD_DATA;
 	writeData(color >> 8);
@@ -291,4 +307,11 @@ void LCD_Driver::writeRegister32(uint8_t r, uint32_t d)
     _delay_us(10);
     writeData(d);
     CS_IDLE;
+}
+
+void LCD_Driver::writeStr(char * str) {
+	while(*str) {
+		this->write(*str++);
+	}
+
 }

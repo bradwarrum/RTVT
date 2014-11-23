@@ -385,10 +385,28 @@
     <Compile Include="src\macro.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\MainScreen.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\MainScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\OBDConversion.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\OBDConversion.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\registers.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\RTVT.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Screen.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Screen.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\SDCard.cpp">
@@ -401,6 +419,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\SPI_Driver.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Touch.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Touch.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\uart_driver.cpp">
