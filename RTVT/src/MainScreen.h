@@ -10,14 +10,16 @@
 #define MAINSCREEN_H_
 #include "Screen.h"
 #include "string.h"
+
 class MainScreen : public Screen {
 public:
 	MainScreen(LCD_Driver * lcdscreen);
-	void update(BTOBD * bt);
+	void update(BTOBD * bt, GPS * gps);
 	void clear();
 
 private:
 	void draw(OBDCMDS::CMD cmd, BTOBD * bt);
+	void drawGPS(GPSVAL::VAL value, GPS * gps);
 };
 
 

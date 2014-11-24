@@ -42,9 +42,12 @@ namespace OBDCMDS {
 		CONNECT,
 		INQUIRY,
 		GETSTATUS,
+		FACTORY_RESET,
+		REBOOT,
 		EXITCMDMODE,
 		ELM_ATI,
 		ELM_ATZ,
+		ELM_ATE0,
 		ELM_ATL1,
 		ELM_ATH0,
 		ELM_ATS1,
@@ -66,10 +69,10 @@ private:
 	uint16_t status_reg;
 	uint8_t sizes[13] =   {2, 4, 2, 2, 4, 2, 2, 2, 2, 2, 2, 4, 2};
 	uint8_t offsets[13] = {0, 2, 6, 8,10,14,16,18,20,22,24,26,30};
-	OBDCMDS::CMD cmdorder[13] = {OBDCMDS::SPEED, OBDCMDS::RPM, OBDCMDS::THROTTLE_POS, OBDCMDS::OIL_TEMP, OBDCMDS::FUEL_RATE, 
-	                             OBDCMDS::COOLANT_TEMP, OBDCMDS::ENGINE_LOAD, OBDCMDS::FUEL_LEVEL, OBDCMDS::MANIFOLD_AIR_PRESSURE,
+	OBDCMDS::CMD cmdorder[4] = {OBDCMDS::SPEED, OBDCMDS::RPM, OBDCMDS::THROTTLE_POS, OBDCMDS::ENGINE_LOAD}; /*, OBDCMDS::OIL_TEMP, OBDCMDS::FUEL_RATE, 
+	                             OBDCMDS::COOLANT_TEMP, OBDCMDS::FUEL_LEVEL, OBDCMDS::MANIFOLD_AIR_PRESSURE,
 								 OBDCMDS::AMBIENT_TEMP, OBDCMDS::BAROMETRIC_PRESSURE, OBDCMDS::FUEL_RAIL_PRESSURE, 
-								 OBDCMDS::INTAKE_AIR_TEMP};
+								 OBDCMDS::INTAKE_AIR_TEMP};*/
 	char buffer[32];
 	volatile uint8_t cmdlock;
 	OBDCMDS::CMD currcmd;
@@ -77,6 +80,7 @@ private:
 	volatile uint8_t responses;
 	int8_t cmdcount;
 	void waitForNewline(LCD_Driver * LCD);
+
 
 public:
 	BTOBD();
@@ -93,6 +97,7 @@ public:
 	void clearStatus();
 	void vomit(LCD_Driver * LCD);
 	CBUFFER getRecent(OBDCMDS::CMD cmd);
+		void waitForPrompt(LCD_Driver * LCD);
 }; //BTOBD
 
 #endif //__BTOBD_H__

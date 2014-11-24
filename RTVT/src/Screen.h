@@ -8,9 +8,10 @@
 
 #ifndef SCREEN_H_
 #define SCREEN_H_
-#include "BTOBD.h"
-#include "OBDConversion.h"
 #include "LCD_Driver.h"
+#include "BTOBD.h"
+#include "GPS.h"
+#include "OBDConversion.h"
 
 
 class Screen {
@@ -18,7 +19,7 @@ protected:
 	LCD_Driver * lcd;
 public:
 	Screen(LCD_Driver * lcdscreen);
-	void update(BTOBD * bt);
+	void update(BTOBD * bt, GPS * gps);
 	void clear();
 
 };

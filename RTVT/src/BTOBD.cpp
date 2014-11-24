@@ -31,7 +31,7 @@ BTOBD::BTOBD() : driver(128, 128)
 char BTOBD::interceptByte() {
 	char c = driver.getUARTPort()->DATA;
 	driver.rcvByte(c);
-	if (c == '\n') this->responses ++;
+	if (c == '>') this->responses ++;
 	return c;
 }
 
@@ -48,32 +48,57 @@ bool BTOBD::initialize(LCD_Driver * LCD) {
 
 	sendCmd(OBDCMDS::ENTERCMDMODE);
 	waitForNewline(LCD);
+	sendCmd(OBDCMDS::FACTORY_RESET);
+	waitForNewline(LCD);
+	sendCmd(OBDCMDS::REBOOT);
+	_delay_ms(3000);
+	while(!driver.rxIsEmpty()) {
+			char c = driver.rxDequeue();
+			LCD->write(c);		
+	}
+	sendCmd(OBDCMDS::ENTERCMDMODE);
+	waitForNewline(LCD);
+	/*sendCmd(OBDCMDS::INQUIRY);
+	for (int i = 0; i < 100; i++) {
+		_delay_ms(300);
+		while(!driver.rxIsEmpty()) {
+			char c = driver.rxDequeue();
+			LCD->write(c);
+		}
+	}*/
 	do {
+		LCD->fillScreen(BLACK);
+		LCD->setCursor(0,0);
 		count = 0;
 		sendCmd(OBDCMDS::CONNECT);
 		for (int i = 0; i<100; i++) {
-			_delay_ms(100);
+			_delay_ms(150);
 			while(!driver.rxIsEmpty()) {
 				char c = driver.rxDequeue();
-				//LCD->write(c);
+				LCD->write(c);
 				if (c == '\n') count++;
 			}
 		}
 	} while (count != 1);
-	sendCmd(OBDCMDS::ELM_ATI);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::ELM_ATZ);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::ELM_ATL1);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::ELM_ATH0);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::ELM_ATS1);
-	waitForNewline(LCD);
-	sendCmd(OBDCMDS::ELM_ATSP0);
-	waitForNewline(LCD);
-	responses = 0;
+	LCD->writeStr("Connected\n");	
 
+	//sendCmd(OBDCMDS::ELM_ATI);
+	//waitForNewline(LCD);
+	sendCmd(OBDCMDS::ELM_ATZ);
+	waitForPrompt(LCD);
+	sendCmd(OBDCMDS::ELM_ATE0);
+	waitForPrompt(LCD);
+	sendCmd(OBDCMDS::ELM_ATL1);
+	waitForPrompt(LCD);
+	sendCmd(OBDCMDS::ELM_ATH0);
+	waitForPrompt(LCD);
+	//sendCmd(OBDCMDS::ELM_ATS1);
+	//waitForNewline(LCD);
+	sendCmd(OBDCMDS::ELM_ATSP0);
+	waitForPrompt(LCD);
+	responses = 0;
+						sendCmd(OBDCMDS::RPM);
+						waitForPrompt(LCD);
 	return true;
 }
 bool BTOBD::initialize(char * address, LCD_Driver * LCD) {
@@ -88,10 +113,23 @@ void BTOBD::waitForNewline(LCD_Driver * LCD) {
 		if (!driver.rxIsEmpty())
 		{
 			char c = driver.rxDequeue();
-			//LCD->write(c);
+			LCD->write(c);
 			if (c == '\n') break;
 		}
 		asm("NOP");
+	}
+}
+
+void BTOBD::waitForPrompt(LCD_Driver * LCD) {
+	while(1) {
+		if (!driver.rxIsEmpty()) {
+			char c= driver.rxDequeue();
+			LCD->write(c);
+			if (c == '>') {
+				//LCD->write('\n');
+				break;
+			}
+		}
 	}
 }
 
@@ -115,6 +153,18 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			for (int i = 0; i < 12; i++) {
 				driver.sendByte(bt_addr[i]);
 			}
+			/*driver.sendByte('0');
+			driver.sendByte('0');
+			driver.sendByte('1');
+			driver.sendByte('9');
+			driver.sendByte('5');
+			driver.sendByte('D');
+			driver.sendByte('E');
+			driver.sendByte('8');
+			driver.sendByte('0');
+			driver.sendByte('5');
+			driver.sendByte('7');
+			driver.sendByte('A');*/
 			driver.sendByte('\n'); break;
 		case OBDCMDS::INQUIRY:
 			driver.sendByte('I');
@@ -123,33 +173,56 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('G');
 			driver.sendByte('K');
 			driver.sendByte('\n'); break;
+		case OBDCMDS::FACTORY_RESET:
+			driver.sendByte('S');
+			driver.sendByte('F');
+			driver.sendByte(',');
+			driver.sendByte('1');
+			driver.sendByte('\n'); break;
+		case OBDCMDS::REBOOT:
+			driver.sendByte('R');
+			driver.sendByte(',');
+			driver.sendByte('1');
+			driver.sendByte('\n');
 		case OBDCMDS::ELM_ATI:
 			driver.sendByte('A');
 			driver.sendByte('T');
 			driver.sendByte('I');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); break;
 		case OBDCMDS::ELM_ATZ:
 			driver.sendByte('A');
 			driver.sendByte('T');
 			driver.sendByte('Z');
+			driver.sendByte('\r');
+			driver.sendByte('\n'); break;
+		case OBDCMDS::ELM_ATE0:
+			driver.sendByte('A');
+			driver.sendByte('T');
+			driver.sendByte('E');
+			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); break;
 		case OBDCMDS::ELM_ATL1:
 			driver.sendByte('A');
 			driver.sendByte('T');
 			driver.sendByte('L');
 			driver.sendByte('1');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); break;
 		case OBDCMDS::ELM_ATH0:
 			driver.sendByte('A');
 			driver.sendByte('T');
 			driver.sendByte('H');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); break;
 		case OBDCMDS::ELM_ATS1:
 			driver.sendByte('A');
 			driver.sendByte('T');
 			driver.sendByte('S');
 			driver.sendByte('1');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); break;
 		case OBDCMDS::ELM_ATSP0:
 			driver.sendByte('A');
@@ -157,12 +230,14 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('S');
 			driver.sendByte('P');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); break;
 		case OBDCMDS::RPM:
 			driver.sendByte('0');
 			driver.sendByte('1');
 			driver.sendByte('0');
 			driver.sendByte('C');
+			driver.sendByte('\r');
 			driver.sendByte('\n');
 			this->currupper = '0';
 			this->currlower = 'C'; 
@@ -172,6 +247,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('0');
 			driver.sendByte('D');
+			driver.sendByte('\r');
 			driver.sendByte('\n');
 			this->currupper = '0';
 			this->currlower = 'D';
@@ -181,6 +257,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('1');
 			driver.sendByte('1');
+			driver.sendByte('\r');
 			driver.sendByte('\n');
 			this->currupper = '1';
 			this->currlower = '1';
@@ -190,6 +267,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('5');
 			driver.sendByte('C');
+			driver.sendByte('\r');
 			driver.sendByte('\n');
 			this->currupper = '5';
 			this->currlower = 'C'; 
@@ -199,6 +277,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('5');
 			driver.sendByte('E');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '5';
 			this->currlower = 'E';
@@ -208,6 +287,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('6');
 			driver.sendByte('7');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '6';
 			this->currlower = '7';
@@ -217,6 +297,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('0');
 			driver.sendByte('4');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '0';
 			this->currlower = '4';
@@ -226,6 +307,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('2');
 			driver.sendByte('F');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '2';
 			this->currlower = 'F';
@@ -235,6 +317,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('8');
 			driver.sendByte('7');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '8';
 			this->currlower = '7';
@@ -244,6 +327,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('4');
 			driver.sendByte('6');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '4';
 			this->currlower = '6';
@@ -253,6 +337,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('3');
 			driver.sendByte('3');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '3';
 			this->currlower = '3';
@@ -262,6 +347,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('5');
 			driver.sendByte('9');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '5';
 			this->currlower = '9';
@@ -271,6 +357,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('6');
 			driver.sendByte('8');
+			driver.sendByte('\r');
 			driver.sendByte('\n');
 			this->currupper = '6';
 			this->currlower = '8';
@@ -280,6 +367,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('0');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '0';
 			this->currlower = '0';
@@ -289,6 +377,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('2');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '2';
 			this->currlower = '0';
@@ -298,6 +387,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('4');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '4';
 			this->currlower = '0';
@@ -307,6 +397,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('6');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n'); 
 			this->currupper = '6';
 			this->currlower = '0';
@@ -316,6 +407,7 @@ void BTOBD::sendCmd(OBDCMDS::CMD cmd) {
 			driver.sendByte('1');
 			driver.sendByte('8');
 			driver.sendByte('0');
+			driver.sendByte('\r');
 			driver.sendByte('\n');
 			this->currupper = '8';
 			this->currlower = '0';	
@@ -340,7 +432,7 @@ bool BTOBD::rcvResp()
 
 		if (upper != this->currupper || lower != this->currlower) 
 		{
-		    while(driver.rxDequeue() != '\n' && !driver.rxIsEmpty());
+		    while(driver.rxDequeue() != '>' && !driver.rxIsEmpty());
 		}
 		else if (cmdlock != (int8_t)currcmd)
 		{
@@ -352,7 +444,7 @@ bool BTOBD::rcvResp()
 				if (buffer[i] == c) same++;
 			    else buffer[i] = c;
 		    }
-			while(driver.rxDequeue() != '\n' && !driver.rxIsEmpty());
+			while(driver.rxDequeue() != '>' && !driver.rxIsEmpty());
 			if (same != sizes[currcmd]) this->status_reg |= (1 << currcmd);
 		}
 
@@ -382,8 +474,9 @@ void BTOBD::vomit(LCD_Driver * LCD)
 
 void BTOBD::sendCmd()
 {
+	//FIX
     sendCmd(this->cmdorder[this->cmdcount]);
-	if (++cmdcount == 13) cmdcount = 0;
+	if (++cmdcount == 4) cmdcount = 0;
 }
 
 bool BTOBD::rxIsEmpty() {

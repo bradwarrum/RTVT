@@ -9,7 +9,7 @@
 
  Screen::Screen(LCD_Driver * lcdscreen) {lcd = lcdscreen;}
 
- void Screen::update(BTOBD * bt) {}
+ void Screen::update(BTOBD * bt, GPS * gps) {}
  void Screen::clear() {
 	lcd->fillScreen(WHITE);
  }

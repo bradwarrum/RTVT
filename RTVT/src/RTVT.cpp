@@ -129,35 +129,29 @@ int main(void)
 	GPSref = &GPSModule;
 
 	// BT setup
-	//BTOBD OBDModule;
-	//OBDref = &OBDModule;
+	BTOBD OBDModule;
+	OBDref = &OBDModule;
 
 	PMIC.CTRL |= 0x07;
 	asm("sei");
-	//MainScreen ms(LCDref);
-	//ms.clear();
 
-	//bool send = true;
-	//OBDModule.vomit(LCDref);
+
+	bool send = true;
 	//OBDModule.initialize("000666643F8F", LCDref);
-	/*while (1) 
-	{
-	    if (send) {
-		OBDModule.sendCmd();
+	OBDModule.initialize("00195DE8057A", LCDref);
+	GPSModule.init();
+	MainScreen ms(LCDref);
+	ms.clear();
+	GPSModule.startReceiving();
+	while (1) {
+		if (send) {
+			OBDModule.sendCmd();
 		}
 		send = OBDModule.rcvResp();
-		ms.update(OBDref);
-		/*if (OBDModule.getStatus())
-		{
-		    //OBDModule.clearStatus();
-		    //OBDModule.vomit(LCDref);
-		}
-	}*/
-
-	GPSModule.init();
-	while (1) {
 		GPSModule.updateRegisters();
-		GPSModule.vomit(LCDref);
+
+		//GPSModule.vomit(LCDref);
+		ms.update(OBDref, GPSref);
 	}
 	
 	//FRESULT fr;

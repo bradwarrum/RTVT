@@ -51,6 +51,7 @@ private:
 	uint8_t sizes[10] = {10,1,11,1,11,1,6,6,6,6};
 	uint16_t status_reg;
 	char buffer[59];
+	bool allowRcv = false;
 	uint8_t dataReady = 0;
 	UartDriver uart;
 	char * cmdToString(NMEA::CMD cmd, char * buff3);
@@ -59,9 +60,12 @@ public:
 	void init();
 	void setPeriodic(NMEA::CMD cmd, BYTE rate);
 	uint16_t getStatus();
+	void clearStatus();
 	void vomit(LCD_Driver * lcd);
+	char * retrieve(GPSVAL::VAL value, char * b);
 	void updateRegisters();
 	void interceptByte();
+	void startReceiving();
 	void handleDRE();
 };
 

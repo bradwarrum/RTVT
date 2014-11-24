@@ -9,7 +9,7 @@
 
  MainScreen::MainScreen(LCD_Driver * lcdscreen) : Screen(lcdscreen) {}
  
- void MainScreen::update(BTOBD * bt) {
+ void MainScreen::update(BTOBD * bt, GPS * gps) {
 	uint16_t status = bt->getStatus();
 	bt->clearStatus();
 	OBDCMDS::CMD cmd = OBDCMDS::SPEED;
@@ -17,6 +17,14 @@
 		if (status & 1) draw(cmd, bt);
 		status >>= 1;
 		cmd = static_cast<OBDCMDS::CMD>(((int)cmd)+ 1);
+	}
+	GPSVAL::VAL value = GPSVAL::FIX_TIME;
+	status = gps->getStatus();
+	gps->clearStatus();
+	while (status) {
+		if (status & 1) drawGPS(value, gps);
+		status >>= 1;
+		value = static_cast<GPSVAL::VAL>(((int)value)+1);
 	}
 
  }
@@ -98,4 +106,35 @@
 		lcd->writeStr(itoa(val, wbuf, 10));
 		break;
 	}
+	
+
+ }
+ void MainScreen::drawGPS(GPSVAL::VAL value, GPS * gps) {
+	 char wbuf[15];
+	 gps->retrieve(value, wbuf);
+	 switch(value) {
+	 case GPSVAL::LAT:
+		lcd->setCursor(60,300);
+		lcd->setTextSize(2);
+		lcd->write(wbuf[0]);
+		lcd->write(wbuf[1]);
+		lcd->write(248);
+		lcd->write(' ');
+		lcd->writeStr(wbuf + 2);
+		lcd->write('\'');
+		lcd->writeStr(gps->retrieve(GPSVAL::NS, wbuf));
+		break;
+	 case GPSVAL::LONG:
+		lcd->setCursor(305, 300);
+		lcd->setTextSize(2);
+		lcd->write(wbuf[0]);
+		lcd->write(wbuf[1]);
+		lcd->write(wbuf[2]);
+		lcd->write(248);
+		lcd->write(' ');
+		lcd->writeStr(wbuf + 3);
+		lcd->write('\'');
+		lcd->writeStr(gps->retrieve(GPSVAL::EW, wbuf));
+		break;
+	 }
  }

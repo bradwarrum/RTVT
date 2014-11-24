@@ -23,7 +23,7 @@
 	_delay_ms(100);
 	setPeriodic(NMEA::GSA_OVRL_SATDATA, 0);
 	_delay_ms(100);
-	setPeriodic(NMEA::RMC_REC_MIN_DATA, 2);
+	setPeriodic(NMEA::RMC_REC_MIN_DATA, 1);
 	_delay_ms(100);
 	setPeriodic(NMEA::VTG_VECT_TRCK, 0);
 	_delay_ms(100);
@@ -76,9 +76,11 @@
 
  void GPS::interceptByte() {
 	 char c = this->uart.getUARTPort()->DATA;
+	 if (allowRcv) {
 	 uart.rcvByte(c);
 	 if(c == '\n') {
 		dataReady++;
+	 }
 	 }
  }
 
@@ -92,6 +94,7 @@ void GPS::updateRegisters() {
 	}
 	char c;
 	uint8_t wptr;
+	while((c = uart.rxDequeue()) != ',');
 	for(uint8_t cmd = 0; cmd < 10; cmd++) {
 		wptr = offsets[cmd];
 		while ((c = uart.rxDequeue()) != ',') {
@@ -112,15 +115,40 @@ void GPS::updateRegisters() {
 uint16_t GPS::getStatus() {
 	return status_reg;
 }
+void GPS::clearStatus() {
+	status_reg = 0;
+	};
 
 void GPS::vomit(LCD_Driver * lcd) {
 	if (!status_reg) return;
 	status_reg = 0;
-	for (uint8_t i = 0; i<59; i++) {
+	lcd->writeStr("Lat: ");
+	uint8_t rptr = offsets[GPSVAL::LAT];
+	for (uint8_t i = offsets[GPSVAL::LAT]; i<offsets[GPSVAL::LAT] + sizes[GPSVAL::LAT]; i++) {
 		lcd->write(buffer[i]);
 	}
+	lcd->write(' ');
+	for (uint8_t i = offsets[GPSVAL::LONG]; i<offsets[GPSVAL::LONG] + sizes[GPSVAL::LONG]; i++) {
+			lcd->write(buffer[i]);
+	}
 	lcd->write('\n');
+	/*while(!uart.rxIsEmpty()) {
+		char c = uart.rxDequeue();
+		lcd->write(c);
+		
+	}*/
 
+}
+
+char * GPS::retrieve(GPSVAL::VAL value, char * b) {
+	uint8_t i,y;
+	y = 0;
+	for (i = offsets[value]; i<offsets[value] + sizes[value]; i++, y++) {
+		b[y] = buffer[i];
+		if (buffer[i] == '\0') return b;
+	}
+	b[y] = '\0';
+	return b;
 }
 
  void GPS::handleDRE() {
@@ -129,4 +157,8 @@ void GPS::vomit(LCD_Driver * lcd) {
 	 } else {
 		 uart.getUARTPort()->CTRLA &= ~(0x03); //Disable DREint
 	 }
+ }
+ 
+ void GPS::startReceiving() {
+	 allowRcv = true;
  }
