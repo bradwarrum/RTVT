@@ -20,14 +20,12 @@ BTOBD::BTOBD() : driver(128, 128)
 	cmdlock = -1;
 
 	for (int i = 0; i < 36; i++) buffer[i] = '0';
-	//Configure timer
-	TCC1.CTRLA = 0x00; //Off at first
-	TCC1.CTRLB = 0x10; //CCA on, no waveform generation
-	TCC1.CCA = 1000; //Check approximately at 4 Hz
-	TCC1.INTCTRLB = 0x00; //Disable CCA interrupts
 
-	TCC1.CTRLA = 0x07; // Prescaler /1024
 } //BTOBD
+
+void BTOBD::dump(FIL * fp) {
+	driver.dump(fp);
+}
 char BTOBD::interceptByte() {
 	char c = driver.getUARTPort()->DATA;
 	driver.rcvByte(c);
@@ -472,10 +470,14 @@ void BTOBD::vomit(LCD_Driver * LCD)
 	LCD->write('\n');
 }
 
-void BTOBD::sendCmd()
+void BTOBD::sendCmd(FIL * fp)
 {
 	//FIX
+	char c[4];
     sendCmd(this->cmdorder[this->cmdcount]);
+	f_puts("Sent cmd ", fp);
+	f_puts(itoa(this->cmdcount, c, 10), fp);
+	f_putc('\n', fp);
 	if (++cmdcount == 4) cmdcount = 0;
 }
 

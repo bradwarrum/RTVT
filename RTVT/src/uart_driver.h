@@ -46,6 +46,7 @@ class UartDriver
 	char txDequeue();
 	char rxDequeue();
 	USART_t * getUARTPort();
+	void dump(FIL * fp);
 	
 	private:
 	USART_t * uval;

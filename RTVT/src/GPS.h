@@ -67,6 +67,7 @@ public:
 	void interceptByte();
 	void startReceiving();
 	void handleDRE();
+	void dump(FIL * fp);
 };
 
 

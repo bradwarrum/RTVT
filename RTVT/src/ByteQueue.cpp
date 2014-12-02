@@ -13,6 +13,12 @@
 	rptr = 0;
 	numitems = 0;
  }
+ 
+ 	void ByteQueue::dumpToFile(FIL * fp) {
+		 char b[8];
+		 f_puts(itoa(numitems, b, 10),fp);
+		 f_putc('\n', fp);
+	 }
 
 
 

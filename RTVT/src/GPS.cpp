@@ -6,11 +6,15 @@
  */ 
  #include "GPS.h"
 
- GPS::GPS() : uart(220, 80) {
+ GPS::GPS() : uart(220,80) {
  	uart.init(&USARTD1, ParityMode::DISABLED, CharSize::EIGHT, false, 12, 0x50);//4800 baud
 	status_reg = 0;
 	for (uint8_t i = 0; i < 59; i++) buffer[i] = '\0';
  };
+ 
+ void GPS::dump(FIL * fp) {
+	 uart.dump(fp);
+ }
 
  void GPS::init() {
  	uart.sendString("$PSRF105,1*3E\r\n", 15, 0);
@@ -94,10 +98,28 @@ void GPS::updateRegisters() {
 	}
 	char c;
 	uint8_t wptr;
-	while((c = uart.rxDequeue()) != ',');
+	bool err = false;
+	//while((c = uart.rxDequeue()) != ',');
+	if (uart.rxDequeue() != '$') err = true;
+	if (uart.rxDequeue() != 'G') err = true;
+	if (uart.rxDequeue() != 'P') err = true;
+	if (uart.rxDequeue() != 'R') err = true;
+	if (uart.rxDequeue() != 'M') err = true;
+	if (uart.rxDequeue() != 'C') err = true;
+	if (uart.rxDequeue() != ',') err = true;
+	if (err) {
+		while (!uart.rxIsEmpty() && uart.rxDequeue() != '\n');
+		asm("cli");
+		dataReady --;
+		asm("sei");
+		return;
+	}
 	for(uint8_t cmd = 0; cmd < 10; cmd++) {
 		wptr = offsets[cmd];
 		while ((c = uart.rxDequeue()) != ',') {
+			if (uart.rxIsEmpty()) {
+				asm("NOP");
+			}
 			if (buffer[wptr] != c) status_reg |= (1 << cmd);
 			buffer[wptr++] = c;
 		}

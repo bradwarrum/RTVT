@@ -38,6 +38,14 @@
 	//Check status of card detect
 	if (SPI_PORT.IN & SPI_CD_BM) Stat |= STA_NODISK;
 	spi.enable();
+	
+		//Configure timer
+		TCC1.CTRLA = 0x00; //Off at first
+		TCC1.CTRLB = 0x10; //CCA on, no waveform generation
+		TCC1.CCA = 31250; //Check approximately at 1 Hz
+		TCC1.INTCTRLB = 0x01; //Enable CCA interrupts, low priority
+
+		TCC1.CTRLA = 0x07; // Prescaler /1024
  }
  DSTATUS SDCard::getStatus() {
 	return Stat;

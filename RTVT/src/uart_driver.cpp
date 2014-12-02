@@ -8,6 +8,10 @@
 #include "uart_driver.h"
 
 UartDriver::UartDriver(int rx_buffer_size, int tx_buffer_size) : rxQueue(rx_buffer_size), txQueue(tx_buffer_size) {}
+	
+void UartDriver::dump(FIL * fp) {
+	rxQueue.dumpToFile(fp);
+}
 
 void UartDriver::init(USART_t * uval, ParityMode::PMODE pmode, CharSize::CHSIZE chsize, bool stopbit, char baudctrla, char baudctrlb)
 {

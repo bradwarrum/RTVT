@@ -90,12 +90,13 @@ public:
 	void handleDRE();
 	bool rxIsEmpty();
 	char rxDequeue();
-	void sendCmd();
+	void sendCmd(FIL * fp);
 	void sendCmd(OBDCMDS::CMD cmd);
 	bool rcvResp();
 	uint16_t getStatus();
 	void clearStatus();
 	void vomit(LCD_Driver * LCD);
+	void dump(FIL * fp);
 	CBUFFER getRecent(OBDCMDS::CMD cmd);
 		void waitForPrompt(LCD_Driver * LCD);
 }; //BTOBD

@@ -9,6 +9,8 @@
 #define BYTEQUEUE_H_
 #include <stdlib.h>
 #include "ByteArray.h"
+#include "ff.h"
+#include "stdlib.h"
 
 class ByteQueue {
 
@@ -19,6 +21,7 @@ public:
 	bool isFull();
 	bool isEmpty();
 	int getCount();
+	void dumpToFile(FIL * fp);
 private:
 	int max_size;
 	volatile int numitems, wptr, rptr;

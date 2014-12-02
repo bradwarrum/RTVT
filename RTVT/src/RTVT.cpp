@@ -24,6 +24,8 @@ LCD_Driver * LCDref;
 GPS * GPSref;
 Touch * Touchref;
 bool fileOpened = false;
+bool performWrite = false;
+bool wtoggle = false;
 uint8_t numattempts = 0;
 // Utilizes USARTD0 for Bluetooth receive
 
@@ -67,6 +69,15 @@ ISR(TCC0_CCA_vect)
 	if (Touchref->getX() > 0x0400 || Touchref->getY() > 0x0400) PORTF.OUTSET = 0x01;
 	else PORTF.OUTCLR = 0x01;
 }
+ISR(TCC1_CCA_vect)
+{
+	//Reset the timer
+	TCC1.CNT = 0;
+	wtoggle = !wtoggle;
+	if (wtoggle) {
+		performWrite = true;
+	}
+}
 
 void setClockTo2MHz()
 {
@@ -97,7 +108,7 @@ FRESULT open_append(FIL * fp, const char * path) {
 	return fr;
 }
 
-FRESULT writeDP(FIL * fp) {
+void writeDP(FIL * fp) {
 	char buff[20];
 	if (numattempts < 10) {
 		if (OBDConversion::dp.speed != 0) {
@@ -111,8 +122,12 @@ FRESULT writeDP(FIL * fp) {
 				}
 			}
 			if (fileOpened) {
+				GPSref->retrieve(GPSVAL::NS, buff);
+				if (*buff == 'S') f_putc('-', fp);
 				f_puts(GPSref->retrieve(GPSVAL::LAT, buff), fp);
 				f_putc(',', fp);
+				GPSref->retrieve(GPSVAL::EW, buff);
+				if (*buff == 'W') f_putc('-', fp);
 				f_puts(GPSref->retrieve(GPSVAL::LONG, buff), fp);
 				f_putc(',', fp);
 				f_puts(GPSref->retrieve(GPSVAL::FIX_TIME, buff), fp);
@@ -124,10 +139,36 @@ FRESULT writeDP(FIL * fp) {
 				f_puts(itoa(OBDConversion::dp.throttle_pos, buff, 10), fp);
 				f_putc(',', fp);
 				f_puts(itoa(OBDConversion::dp.engine_load, buff, 10), fp);
+				f_putc(',', fp);
 				f_putc('\n', fp);
+				f_puts("GPS Size: ", fp);
+				GPSref->dump(fp);
+				f_puts("OBD Size: ", fp);
+				OBDref->dump(fp);
 			}
 		}else {
 			if (fileOpened) {
+				GPSref->retrieve(GPSVAL::NS, buff);
+				if (*buff == 'S') f_putc('-', fp);
+				f_puts(GPSref->retrieve(GPSVAL::LAT, buff), fp);
+				f_putc(',', fp);
+				GPSref->retrieve(GPSVAL::EW, buff);
+				if (*buff == 'W') f_putc('-', fp);
+				f_puts(GPSref->retrieve(GPSVAL::LONG, buff), fp);
+				f_putc(',', fp);
+				f_puts(GPSref->retrieve(GPSVAL::FIX_TIME, buff), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.speed, buff, 10), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.rpm, buff, 10), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.throttle_pos, buff, 10), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.engine_load, buff, 10), fp);
+				f_putc(',', fp);
+				f_putc('\n', fp);
+				GPSref->dump(fp);
+				OBDref->dump(fp);
 				fileOpened = false;
 				f_close(fp);
 			}
@@ -158,7 +199,7 @@ int main(void)
 	f_mount(&fs, "", 0);
 	fr = f_open(&fil, "test.csv",FA_WRITE | FA_CREATE_ALWAYS);
 	if (fr == FR_OK) {
-		f_puts((TCHAR *) "lat,long,time,speed,rpm,throttle,load\n", &fil);
+		f_puts((TCHAR *) "lat,long,time,speed,rpm,throttle,load,\n", &fil);
 	}
 	f_close(&fil);
 
@@ -194,26 +235,29 @@ int main(void)
 
 
 	bool send = true;
-	//OBDModule.initialize("000666643F8F", LCDref);
-	OBDModule.initialize("00195DE8057A", LCDref);
+	OBDModule.initialize("000666643F8F", LCDref);
+	//OBDModule.initialize("00195DE8057A", LCDref);
 	GPSModule.init();
 	MainScreen ms(LCDref);
 	ms.clear();
 	GPSModule.startReceiving();
-	while(1) {
+	/*while(1) {
 		GPSModule.updateRegisters();
 		if (GPSModule.getStatus()) break;
-	}
+	}*/
 	while (1) {
 		if (send) {
-			OBDModule.sendCmd();
+			OBDModule.sendCmd(&fil);
 		}
 		send = OBDModule.rcvResp();
 		GPSModule.updateRegisters();
 
 		//GPSModule.vomit(LCDref);
 		ms.update(OBDref, GPSref);
-		writeDP(&fil);
+		if (performWrite) {
+			writeDP(&fil);
+			performWrite = false;
+		}
 		
 	}
 	
