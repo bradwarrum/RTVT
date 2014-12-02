@@ -10,11 +10,18 @@
 #define __OBDCONVERSION_H__
 #include <stdint.h>
 
-
+typedef struct {
+	uint8_t speed;
+	uint8_t throttle_pos;
+	uint8_t engine_load;
+	uint16_t rpm;
+} DATAPOINT;
 class OBDConversion
 {
 
 public:
+	static void init();
+	static DATAPOINT dp;
 	static uint8_t speed(char au, char al);
 	static uint16_t rpm(char au, char al, char bu, char bl);
 	static uint8_t throttle_pos(char au, char al);

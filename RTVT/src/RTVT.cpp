@@ -23,6 +23,8 @@ BTOBD * OBDref;
 LCD_Driver * LCDref;
 GPS * GPSref;
 Touch * Touchref;
+bool fileOpened = false;
+uint8_t numattempts = 0;
 // Utilizes USARTD0 for Bluetooth receive
 
 
@@ -95,6 +97,44 @@ FRESULT open_append(FIL * fp, const char * path) {
 	return fr;
 }
 
+FRESULT writeDP(FIL * fp) {
+	char buff[20];
+	if (numattempts < 10) {
+		if (OBDConversion::dp.speed != 0) {
+			if (!fileOpened) {
+				FRESULT res = open_append(fp, "test.csv");
+				if (res != FR_OK) {
+					numattempts++;
+				} else {
+					numattempts = 0;
+					fileOpened = true;
+				}
+			}
+			if (fileOpened) {
+				f_puts(GPSref->retrieve(GPSVAL::LAT, buff), fp);
+				f_putc(',', fp);
+				f_puts(GPSref->retrieve(GPSVAL::LONG, buff), fp);
+				f_putc(',', fp);
+				f_puts(GPSref->retrieve(GPSVAL::FIX_TIME, buff), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.speed, buff, 10), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.rpm, buff, 10), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.throttle_pos, buff, 10), fp);
+				f_putc(',', fp);
+				f_puts(itoa(OBDConversion::dp.engine_load, buff, 10), fp);
+				f_putc('\n', fp);
+			}
+		}else {
+			if (fileOpened) {
+				fileOpened = false;
+				f_close(fp);
+			}
+		}
+	} 
+}
+
 
 int main(void)
 {
@@ -102,11 +142,26 @@ int main(void)
 	setClockTo32MHz();
 	_delay_ms(1000);
 
+	//SD card vars
+	FRESULT fr;
+	FATFS fs;
+	FIL fil;
+	int err;
+
 	// Set pins as outputs
 	PORTD.OUT = 0x88;
 	PORTD.DIR = 0x88;
 	PORTE.DIR = 0xB0;
 	PORTF.DIR = 0x01;
+
+	//SD card setup
+	f_mount(&fs, "", 0);
+	fr = f_open(&fil, "test.csv",FA_WRITE | FA_CREATE_ALWAYS);
+	if (fr == FR_OK) {
+		f_puts((TCHAR *) "lat,long,time,speed,rpm,throttle,load\n", &fil);
+	}
+	f_close(&fil);
+
 
 	// LCD setup
 	LCD_Driver LCD;
@@ -118,6 +173,8 @@ int main(void)
 	LCD.setTextColor(0xFFFF, 0x0000);
 	LCD.setTextSize(2);
 	LCD.setTextWrap(true);
+
+	OBDConversion::init();
 
 	// Touch setup
 	//Touch toucj;
@@ -143,6 +200,10 @@ int main(void)
 	MainScreen ms(LCDref);
 	ms.clear();
 	GPSModule.startReceiving();
+	while(1) {
+		GPSModule.updateRegisters();
+		if (GPSModule.getStatus()) break;
+	}
 	while (1) {
 		if (send) {
 			OBDModule.sendCmd();
@@ -152,22 +213,13 @@ int main(void)
 
 		//GPSModule.vomit(LCDref);
 		ms.update(OBDref, GPSref);
+		writeDP(&fil);
+		
 	}
 	
-	//FRESULT fr;
-	//FATFS fs;
-	//FIL fil;
-	//int err;
 
-	//f_mount(&fs, "", 0);
 
-	//fr = open_append(&fil, "test.txt");
-	//if (fr != FR_OK) return 1;
-	//err = f_puts((TCHAR *) "abcdefghijklmnopqrstuvwxyz\nabcdefghijklmnopqrstuvwxyz\nabcdefghijklmnopqrstuvwxyz\n", &fil);
-	//if (err == -1) return 2;
-	//f_close(&fil);
 
-	//while (1) { if (!OBDModule.rxIsEmpty()) LCD.write(OBDModule.rxDequeue()); }
 }
 
 
