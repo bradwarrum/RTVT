@@ -141,10 +141,10 @@ void writeDP(FIL * fp) {
 				f_puts(itoa(OBDConversion::dp.engine_load, buff, 10), fp);
 				f_putc(',', fp);
 				f_putc('\n', fp);
-				f_puts("GPS Size: ", fp);
-				GPSref->dump(fp);
-				f_puts("OBD Size: ", fp);
-				OBDref->dump(fp);
+				//f_puts("GPS Size: ", fp);
+				//GPSref->dump(fp);
+				//f_puts("OBD Size: ", fp);
+				//OBDref->dump(fp);
 			}
 		}else {
 			if (fileOpened) {
@@ -167,8 +167,8 @@ void writeDP(FIL * fp) {
 				f_puts(itoa(OBDConversion::dp.engine_load, buff, 10), fp);
 				f_putc(',', fp);
 				f_putc('\n', fp);
-				GPSref->dump(fp);
-				OBDref->dump(fp);
+				//GPSref->dump(fp);
+				//OBDref->dump(fp);
 				fileOpened = false;
 				f_close(fp);
 			}
@@ -199,7 +199,7 @@ int main(void)
 	f_mount(&fs, "", 0);
 	fr = f_open(&fil, "test.csv",FA_WRITE | FA_CREATE_ALWAYS);
 	if (fr == FR_OK) {
-		f_puts((TCHAR *) "lat,long,time,speed,rpm,throttle,load,\n", &fil);
+		f_puts((TCHAR *) "lat,lng,time,speed,rpm,throttle,load,\n", &fil);
 	}
 	f_close(&fil);
 
@@ -235,8 +235,8 @@ int main(void)
 
 
 	bool send = true;
-	OBDModule.initialize("000666643F8F", LCDref);
-	//OBDModule.initialize("00195DE8057A", LCDref);
+	//OBDModule.initialize("000666643F8F", LCDref);
+	OBDModule.initialize("00195DE8057A", LCDref);
 	GPSModule.init();
 	MainScreen ms(LCDref);
 	ms.clear();

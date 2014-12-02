@@ -14112,7 +14112,8 @@ int main(void)
 
 
 	bool send = true;
-	OBDModule.initialize("000666643F8F", LCDref);
+	//OBDModule.initialize("000666643F8F", LCDref);
+	OBDModule.initialize("00195DE8057A", LCDref);
     6a3a:	40 91 8b 21 	lds	r20, 0x218B
     6a3e:	50 91 8c 21 	lds	r21, 0x218C
     6a42:	6d e6       	ldi	r22, 0x6D	; 109
@@ -14121,7 +14122,6 @@ int main(void)
     6a48:	83 54       	subi	r24, 0x43	; 67
     6a4a:	9b 4f       	sbci	r25, 0xFB	; 251
     6a4c:	0e 94 63 0c 	call	0x18c6	; 0x18c6 <_ZN5BTOBD10initializeEPcP10LCD_Driver>
-	//OBDModule.initialize("00195DE8057A", LCDref);
 	GPSModule.init();
     6a50:	ce 01       	movw	r24, r28
     6a52:	81 5b       	subi	r24, 0xB1	; 177
