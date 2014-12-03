@@ -130,6 +130,8 @@ void writeDP(FIL * fp) {
 				if (*buff == 'W') f_putc('-', fp);
 				f_puts(GPSref->retrieve(GPSVAL::LONG, buff), fp);
 				f_putc(',', fp);
+				f_puts(GPSref->retrieve(GPSVAL::DATE, buff), fp);
+				f_putc(',', fp);
 				f_puts(GPSref->retrieve(GPSVAL::FIX_TIME, buff), fp);
 				f_putc(',', fp);
 				f_puts(itoa(OBDConversion::dp.speed, buff, 10), fp);
@@ -155,6 +157,8 @@ void writeDP(FIL * fp) {
 				GPSref->retrieve(GPSVAL::EW, buff);
 				if (*buff == 'W') f_putc('-', fp);
 				f_puts(GPSref->retrieve(GPSVAL::LONG, buff), fp);
+				f_putc(',', fp);
+				f_puts(GPSref->retrieve(GPSVAL::DATE, buff), fp);
 				f_putc(',', fp);
 				f_puts(GPSref->retrieve(GPSVAL::FIX_TIME, buff), fp);
 				f_putc(',', fp);
@@ -199,7 +203,7 @@ int main(void)
 	f_mount(&fs, "", 0);
 	fr = f_open(&fil, "test.csv",FA_WRITE | FA_CREATE_ALWAYS);
 	if (fr == FR_OK) {
-		f_puts((TCHAR *) "lat,lng,time,speed,rpm,throttle,load,\n", &fil);
+		f_puts((TCHAR *) "lat,lng,date,time,speed,rpm,throttle,load,\n", &fil);
 	}
 	f_close(&fil);
 
@@ -247,7 +251,7 @@ int main(void)
 	}*/
 	while (1) {
 		if (send) {
-			OBDModule.sendCmd(&fil);
+			OBDModule.sendCmd();
 		}
 		send = OBDModule.rcvResp();
 		GPSModule.updateRegisters();

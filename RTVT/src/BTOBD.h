@@ -90,7 +90,7 @@ public:
 	void handleDRE();
 	bool rxIsEmpty();
 	char rxDequeue();
-	void sendCmd(FIL * fp);
+	void sendCmd();
 	void sendCmd(OBDCMDS::CMD cmd);
 	bool rcvResp();
 	uint16_t getStatus();

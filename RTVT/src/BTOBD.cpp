@@ -29,7 +29,9 @@ void BTOBD::dump(FIL * fp) {
 char BTOBD::interceptByte() {
 	char c = driver.getUARTPort()->DATA;
 	driver.rcvByte(c);
-	if (c == '>') this->responses ++;
+	if (c == '>') {
+		this->responses ++;
+	}
 	return c;
 }
 
@@ -95,8 +97,8 @@ bool BTOBD::initialize(LCD_Driver * LCD) {
 	sendCmd(OBDCMDS::ELM_ATSP0);
 	waitForPrompt(LCD);
 	responses = 0;
-						sendCmd(OBDCMDS::RPM);
-						waitForPrompt(LCD);
+	sendCmd(OBDCMDS::RPM);
+	waitForPrompt(LCD);
 	return true;
 }
 bool BTOBD::initialize(char * address, LCD_Driver * LCD) {
@@ -470,14 +472,11 @@ void BTOBD::vomit(LCD_Driver * LCD)
 	LCD->write('\n');
 }
 
-void BTOBD::sendCmd(FIL * fp)
+void BTOBD::sendCmd()
 {
 	//FIX
 	char c[4];
     sendCmd(this->cmdorder[this->cmdcount]);
-	f_puts("Sent cmd ", fp);
-	f_puts(itoa(this->cmdcount, c, 10), fp);
-	f_putc('\n', fp);
 	if (++cmdcount == 4) cmdcount = 0;
 }
 

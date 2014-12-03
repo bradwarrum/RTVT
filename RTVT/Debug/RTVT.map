@@ -104,6 +104,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/BTOBD.o
  .data          0x00000000        0x0 src/BTOBD.o
  .bss           0x00000000        0x0 src/BTOBD.o
+ .text._ZN5BTOBD4dumpEP3FIL
+                0x00000000        0x6 src/BTOBD.o
  .text._ZN5BTOBD5vomitEP10LCD_Driver
                 0x00000000      0x108 src/BTOBD.o
  .text._ZN5BTOBD9rxIsEmptyEv
@@ -120,6 +122,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/ByteQueue.o
  .data          0x00000000        0x0 src/ByteQueue.o
  .bss           0x00000000        0x0 src/ByteQueue.o
+ .text._ZN9ByteQueue10dumpToFileEP3FIL
+                0x00000000       0x44 src/ByteQueue.o
  .text._ZN9ByteQueue8getCountEv
                 0x00000000        0x8 src/ByteQueue.o
  .group         0x00000000        0x8 src/ff.o
@@ -204,6 +208,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/GPS.o
  .data          0x00000000        0x0 src/GPS.o
  .bss           0x00000000        0x0 src/GPS.o
+ .text._ZN3GPS4dumpEP3FIL
+                0x00000000        0xa src/GPS.o
  .text._ZN3GPS5vomitEP10LCD_Driver
                 0x00000000       0xec src/GPS.o
  .group         0x00000000        0x8 src/LCD_Driver.o
@@ -256,6 +262,8 @@ Discarded input sections
  .text          0x00000000        0x0 src/uart_driver.o
  .data          0x00000000        0x0 src/uart_driver.o
  .bss           0x00000000        0x0 src/uart_driver.o
+ .text._ZN10UartDriver4dumpEP3FIL
+                0x00000000        0x8 src/uart_driver.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixsfsi.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixsfsi.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixsfsi.o)
@@ -607,7 +615,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x8526
+.text           0x00000000     0x8468
  *(.vectors)
  .vectors       0x00000000      0x1fc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6/crtx128a3u.o
                 0x00000000                __vectors
@@ -848,480 +856,468 @@ END GROUP
                 0x00000e6e       0xac src/BTOBD.o
                 0x00000e6e                _ZN5BTOBDC1Ev
                 0x00000e6e                _ZN5BTOBDC2Ev
- .text._ZN5BTOBD4dumpEP3FIL
-                0x00000f1a        0x6 src/BTOBD.o
-                0x00000f1a                _ZN5BTOBD4dumpEP3FIL
  .text._ZN5BTOBD13interceptByteEv
-                0x00000f20       0x30 src/BTOBD.o
-                0x00000f20                _ZN5BTOBD13interceptByteEv
+                0x00000f1a       0x30 src/BTOBD.o
+                0x00000f1a                _ZN5BTOBD13interceptByteEv
  .text._ZN5BTOBD9handleDREEv
-                0x00000f50       0x3e src/BTOBD.o
-                0x00000f50                _ZN5BTOBD9handleDREEv
+                0x00000f4a       0x3e src/BTOBD.o
+                0x00000f4a                _ZN5BTOBD9handleDREEv
  .text._ZN5BTOBD14waitForNewlineEP10LCD_Driver
-                0x00000f8e       0x48 src/BTOBD.o
-                0x00000f8e                _ZN5BTOBD14waitForNewlineEP10LCD_Driver
+                0x00000f88       0x48 src/BTOBD.o
+                0x00000f88                _ZN5BTOBD14waitForNewlineEP10LCD_Driver
  .text._ZN5BTOBD13waitForPromptEP10LCD_Driver
-                0x00000fd6       0x44 src/BTOBD.o
-                0x00000fd6                _ZN5BTOBD13waitForPromptEP10LCD_Driver
+                0x00000fd0       0x44 src/BTOBD.o
+                0x00000fd0                _ZN5BTOBD13waitForPromptEP10LCD_Driver
  .text._ZN5BTOBD7sendCmdEN7OBDCMDS3CMDE
-                0x0000101a      0x70e src/BTOBD.o
-                0x0000101a                _ZN5BTOBD7sendCmdEN7OBDCMDS3CMDE
+                0x00001014      0x70e src/BTOBD.o
+                0x00001014                _ZN5BTOBD7sendCmdEN7OBDCMDS3CMDE
  .text._ZN5BTOBD10initializeEP10LCD_Driver
-                0x00001728      0x19e src/BTOBD.o
-                0x00001728                _ZN5BTOBD10initializeEP10LCD_Driver
+                0x00001722      0x19e src/BTOBD.o
+                0x00001722                _ZN5BTOBD10initializeEP10LCD_Driver
  .text._ZN5BTOBD10initializeEPcP10LCD_Driver
-                0x000018c6       0x20 src/BTOBD.o
-                0x000018c6                _ZN5BTOBD10initializeEPcP10LCD_Driver
+                0x000018c0       0x20 src/BTOBD.o
+                0x000018c0                _ZN5BTOBD10initializeEPcP10LCD_Driver
  .text._ZN5BTOBD7rcvRespEv
-                0x000018e6      0x1ca src/BTOBD.o
-                0x000018e6                _ZN5BTOBD7rcvRespEv
+                0x000018e0      0x1ca src/BTOBD.o
+                0x000018e0                _ZN5BTOBD7rcvRespEv
  .text._ZN5BTOBD9getStatusEv
-                0x00001ab0        0x8 src/BTOBD.o
-                0x00001ab0                _ZN5BTOBD9getStatusEv
+                0x00001aaa        0x8 src/BTOBD.o
+                0x00001aaa                _ZN5BTOBD9getStatusEv
  .text._ZN5BTOBD11clearStatusEv
-                0x00001ab8        0x8 src/BTOBD.o
-                0x00001ab8                _ZN5BTOBD11clearStatusEv
- .text._ZN5BTOBD7sendCmdEP3FIL
-                0x00001ac0       0x9a src/BTOBD.o
-                0x00001ac0                _ZN5BTOBD7sendCmdEP3FIL
+                0x00001ab2        0x8 src/BTOBD.o
+                0x00001ab2                _ZN5BTOBD11clearStatusEv
+ .text._ZN5BTOBD7sendCmdEv
+                0x00001aba       0x46 src/BTOBD.o
+                0x00001aba                _ZN5BTOBD7sendCmdEv
  .text._ZN5BTOBD9getRecentEN7OBDCMDS3CMDE
-                0x00001b5a       0x60 src/BTOBD.o
-                0x00001b5a                _ZN5BTOBD9getRecentEN7OBDCMDS3CMDE
+                0x00001b00       0x60 src/BTOBD.o
+                0x00001b00                _ZN5BTOBD9getRecentEN7OBDCMDS3CMDE
  .text._ZN9ByteArrayC2Ei
-                0x00001bba       0x1a src/ByteArray.o
-                0x00001bba                _ZN9ByteArrayC2Ei
-                0x00001bba                _ZN9ByteArrayC1Ei
+                0x00001b60       0x1a src/ByteArray.o
+                0x00001b60                _ZN9ByteArrayC2Ei
+                0x00001b60                _ZN9ByteArrayC1Ei
  .text._ZN9ByteArray2atEi
-                0x00001bd4       0x10 src/ByteArray.o
-                0x00001bd4                _ZN9ByteArray2atEi
+                0x00001b7a       0x10 src/ByteArray.o
+                0x00001b7a                _ZN9ByteArray2atEi
  .text._ZN9ByteArray3setEic
-                0x00001be4       0x10 src/ByteArray.o
-                0x00001be4                _ZN9ByteArray3setEic
+                0x00001b8a       0x10 src/ByteArray.o
+                0x00001b8a                _ZN9ByteArray3setEic
  .text._ZN9ByteQueueC2Ei
-                0x00001bf4       0x2a src/ByteQueue.o
-                0x00001bf4                _ZN9ByteQueueC1Ei
-                0x00001bf4                _ZN9ByteQueueC2Ei
- .text._ZN9ByteQueue10dumpToFileEP3FIL
-                0x00001c1e       0x44 src/ByteQueue.o
-                0x00001c1e                _ZN9ByteQueue10dumpToFileEP3FIL
+                0x00001b9a       0x2a src/ByteQueue.o
+                0x00001b9a                _ZN9ByteQueueC1Ei
+                0x00001b9a                _ZN9ByteQueueC2Ei
  .text._ZN9ByteQueue7enqueueEc
-                0x00001c62       0x52 src/ByteQueue.o
-                0x00001c62                _ZN9ByteQueue7enqueueEc
+                0x00001bc4       0x52 src/ByteQueue.o
+                0x00001bc4                _ZN9ByteQueue7enqueueEc
  .text._ZN9ByteQueue7dequeueEv
-                0x00001cb4       0x50 src/ByteQueue.o
-                0x00001cb4                _ZN9ByteQueue7dequeueEv
+                0x00001c16       0x50 src/ByteQueue.o
+                0x00001c16                _ZN9ByteQueue7dequeueEv
  .text._ZN9ByteQueue6isFullEv
-                0x00001d04       0x16 src/ByteQueue.o
-                0x00001d04                _ZN9ByteQueue6isFullEv
+                0x00001c66       0x16 src/ByteQueue.o
+                0x00001c66                _ZN9ByteQueue6isFullEv
  .text._ZN9ByteQueue7isEmptyEv
-                0x00001d1a       0x10 src/ByteQueue.o
-                0x00001d1a                _ZN9ByteQueue7isEmptyEv
- .text.mem_cpy  0x00001d2a       0x58 src/ff.o
- .text.mem_set  0x00001d82       0x4c src/ff.o
+                0x00001c7c       0x10 src/ByteQueue.o
+                0x00001c7c                _ZN9ByteQueue7isEmptyEv
+ .text.mem_cpy  0x00001c8c       0x58 src/ff.o
+ .text.mem_set  0x00001ce4       0x4c src/ff.o
  .text.ld_clust
-                0x00001dce       0x68 src/ff.o
+                0x00001d30       0x68 src/ff.o
  .text.st_clust
-                0x00001e36       0x58 src/ff.o
+                0x00001d98       0x58 src/ff.o
  .text.get_ldnumber
-                0x00001e8e       0x98 src/ff.o
+                0x00001df0       0x98 src/ff.o
  .text.sync_window
-                0x00001f26      0x108 src/ff.o
+                0x00001e88      0x108 src/ff.o
  .text.move_window
-                0x0000202e       0x94 src/ff.o
+                0x00001f90       0x94 src/ff.o
  .text.check_fs
-                0x000020c2       0xf4 src/ff.o
+                0x00002024       0xf4 src/ff.o
  .text.validate
-                0x000021b6       0x4a src/ff.o
+                0x00002118       0x4a src/ff.o
  .text.find_volume
-                0x00002200      0x774 src/ff.o
- .text.sync_fs  0x00002974      0x13e src/ff.o
+                0x00002162      0x774 src/ff.o
+ .text.sync_fs  0x000028d6      0x13e src/ff.o
  .text.clust2sect
-                0x00002ab2       0x9c src/ff.o
-                0x00002ab2                clust2sect
- .text.get_fat  0x00002b4e      0x26c src/ff.o
-                0x00002b4e                get_fat
- .text.dir_sdi  0x00002dba      0x21a src/ff.o
- .text.put_fat  0x00002fd4      0x2f2 src/ff.o
-                0x00002fd4                put_fat
+                0x00002a14       0x9c src/ff.o
+                0x00002a14                clust2sect
+ .text.get_fat  0x00002ab0      0x26c src/ff.o
+                0x00002ab0                get_fat
+ .text.dir_sdi  0x00002d1c      0x21a src/ff.o
+ .text.put_fat  0x00002f36      0x2f2 src/ff.o
+                0x00002f36                put_fat
  .text.create_chain
-                0x000032c6      0x2bc src/ff.o
+                0x00003228      0x2bc src/ff.o
  .text.dir_next
-                0x00003582      0x2ca src/ff.o
+                0x000034e4      0x2ca src/ff.o
  .text.follow_path
-                0x0000384c      0x3b2 src/ff.o
+                0x000037ae      0x3b2 src/ff.o
  .text.dir_register
-                0x00003bfe       0xf8 src/ff.o
+                0x00003b60       0xf8 src/ff.o
  .text.remove_chain
-                0x00003cf6      0x15e src/ff.o
- .text.f_mount  0x00003e54       0x9e src/ff.o
-                0x00003e54                f_mount
- .text.f_open   0x00003ef2      0x284 src/ff.o
-                0x00003ef2                f_open
- .text.f_write  0x00004176      0x4aa src/ff.o
-                0x00004176                f_write
+                0x00003c58      0x15e src/ff.o
+ .text.f_mount  0x00003db6       0x9e src/ff.o
+                0x00003db6                f_mount
+ .text.f_open   0x00003e54      0x284 src/ff.o
+                0x00003e54                f_open
+ .text.f_write  0x000040d8      0x4aa src/ff.o
+                0x000040d8                f_write
  .text.putc_bfd
-                0x00004620       0x9a src/ff.o
- .text.f_sync   0x000046ba      0x174 src/ff.o
-                0x000046ba                f_sync
- .text.f_close  0x0000482e       0x20 src/ff.o
-                0x0000482e                f_close
- .text.f_lseek  0x0000484e      0x546 src/ff.o
-                0x0000484e                f_lseek
- .text.f_putc   0x00004d94       0x78 src/ff.o
-                0x00004d94                f_putc
- .text.f_puts   0x00004e0c       0x96 src/ff.o
-                0x00004e0c                f_puts
+                0x00004582       0x9a src/ff.o
+ .text.f_sync   0x0000461c      0x174 src/ff.o
+                0x0000461c                f_sync
+ .text.f_close  0x00004790       0x20 src/ff.o
+                0x00004790                f_close
+ .text.f_lseek  0x000047b0      0x546 src/ff.o
+                0x000047b0                f_lseek
+ .text.f_putc   0x00004cf6       0x78 src/ff.o
+                0x00004cf6                f_putc
+ .text.f_puts   0x00004d6e       0x96 src/ff.o
+                0x00004d6e                f_puts
  .text._ZN3GPSC2Ev
-                0x00004ea2       0x96 src/GPS.o
-                0x00004ea2                _ZN3GPSC1Ev
-                0x00004ea2                _ZN3GPSC2Ev
- .text._ZN3GPS4dumpEP3FIL
-                0x00004f38        0xa src/GPS.o
-                0x00004f38                _ZN3GPS4dumpEP3FIL
+                0x00004e04       0x96 src/GPS.o
+                0x00004e04                _ZN3GPSC1Ev
+                0x00004e04                _ZN3GPSC2Ev
  .text._ZN3GPS11cmdToStringEN4NMEA3CMDEPc
-                0x00004f42       0x5c src/GPS.o
-                0x00004f42                _ZN3GPS11cmdToStringEN4NMEA3CMDEPc
+                0x00004e9a       0x5c src/GPS.o
+                0x00004e9a                _ZN3GPS11cmdToStringEN4NMEA3CMDEPc
  .text._ZN3GPS11setPeriodicEN4NMEA3CMDEh
-                0x00004f9e       0xfa src/GPS.o
-                0x00004f9e                _ZN3GPS11setPeriodicEN4NMEA3CMDEh
+                0x00004ef6       0xfa src/GPS.o
+                0x00004ef6                _ZN3GPS11setPeriodicEN4NMEA3CMDEh
  .text._ZN3GPS4initEv
-                0x00005098       0xd4 src/GPS.o
-                0x00005098                _ZN3GPS4initEv
+                0x00004ff0       0xd4 src/GPS.o
+                0x00004ff0                _ZN3GPS4initEv
  .text._ZN3GPS13interceptByteEv
-                0x0000516c       0x4c src/GPS.o
-                0x0000516c                _ZN3GPS13interceptByteEv
+                0x000050c4       0x4c src/GPS.o
+                0x000050c4                _ZN3GPS13interceptByteEv
  .text._ZN3GPS15updateRegistersEv
-                0x000051b8      0x1d4 src/GPS.o
-                0x000051b8                _ZN3GPS15updateRegistersEv
+                0x00005110      0x1d4 src/GPS.o
+                0x00005110                _ZN3GPS15updateRegistersEv
  .text._ZN3GPS9getStatusEv
-                0x0000538c        0x8 src/GPS.o
-                0x0000538c                _ZN3GPS9getStatusEv
+                0x000052e4        0x8 src/GPS.o
+                0x000052e4                _ZN3GPS9getStatusEv
  .text._ZN3GPS11clearStatusEv
-                0x00005394        0x8 src/GPS.o
-                0x00005394                _ZN3GPS11clearStatusEv
+                0x000052ec        0x8 src/GPS.o
+                0x000052ec                _ZN3GPS11clearStatusEv
  .text._ZN3GPS8retrieveEN6GPSVAL3VALEPc
-                0x0000539c       0x9c src/GPS.o
-                0x0000539c                _ZN3GPS8retrieveEN6GPSVAL3VALEPc
+                0x000052f4       0x9c src/GPS.o
+                0x000052f4                _ZN3GPS8retrieveEN6GPSVAL3VALEPc
  .text._ZN3GPS9handleDREEv
-                0x00005438       0x44 src/GPS.o
-                0x00005438                _ZN3GPS9handleDREEv
+                0x00005390       0x44 src/GPS.o
+                0x00005390                _ZN3GPS9handleDREEv
  .text._ZN3GPS14startReceivingEv
-                0x0000547c        0xc src/GPS.o
-                0x0000547c                _ZN3GPS14startReceivingEv
+                0x000053d4        0xc src/GPS.o
+                0x000053d4                _ZN3GPS14startReceivingEv
  .text._ZN10LCD_Driver4initEv
-                0x00005488       0x8e src/LCD_Driver.o
-                0x00005488                _ZN10LCD_Driver4initEv
+                0x000053e0       0x8e src/LCD_Driver.o
+                0x000053e0                _ZN10LCD_Driver4initEv
  .text._ZN10LCD_DriverC2Ev
-                0x00005516       0x24 src/LCD_Driver.o
-                0x00005516                _ZN10LCD_DriverC2Ev
-                0x00005516                _ZN10LCD_DriverC1Ev
+                0x0000546e       0x24 src/LCD_Driver.o
+                0x0000546e                _ZN10LCD_DriverC2Ev
+                0x0000546e                _ZN10LCD_DriverC1Ev
  .text._ZN10LCD_Driver9writeDataEh
-                0x0000553a       0x18 src/LCD_Driver.o
-                0x0000553a                _ZN10LCD_Driver9writeDataEh
+                0x00005492       0x18 src/LCD_Driver.o
+                0x00005492                _ZN10LCD_Driver9writeDataEh
  .text._ZN10LCD_Driver5resetEv
-                0x00005552       0x7e src/LCD_Driver.o
-                0x00005552                _ZN10LCD_Driver5resetEv
+                0x000054aa       0x7e src/LCD_Driver.o
+                0x000054aa                _ZN10LCD_Driver5resetEv
  .text._ZN10LCD_Driver5beginEv
-                0x000055d0       0xf2 src/LCD_Driver.o
-                0x000055d0                _ZN10LCD_Driver5beginEv
+                0x00005528       0xf2 src/LCD_Driver.o
+                0x00005528                _ZN10LCD_Driver5beginEv
  .text._ZN10LCD_Driver5floodEjm
-                0x000056c2      0x164 src/LCD_Driver.o
-                0x000056c2                _ZN10LCD_Driver5floodEjm
+                0x0000561a      0x164 src/LCD_Driver.o
+                0x0000561a                _ZN10LCD_Driver5floodEjm
  .text._ZN10LCD_Driver15writeRegister32Ehm
-                0x00005826       0x98 src/LCD_Driver.o
-                0x00005826                _ZN10LCD_Driver15writeRegister32Ehm
+                0x0000577e       0x98 src/LCD_Driver.o
+                0x0000577e                _ZN10LCD_Driver15writeRegister32Ehm
  .text._ZN10LCD_Driver13setAddrWindowEjjjj
-                0x000058be       0x80 src/LCD_Driver.o
-                0x000058be                _ZN10LCD_Driver13setAddrWindowEjjjj
+                0x00005816       0x80 src/LCD_Driver.o
+                0x00005816                _ZN10LCD_Driver13setAddrWindowEjjjj
  .text._ZN10LCD_Driver11setRotationEh
-                0x0000593e       0x94 src/LCD_Driver.o
-                0x0000593e                _ZN10LCD_Driver11setRotationEh
+                0x00005896       0x94 src/LCD_Driver.o
+                0x00005896                _ZN10LCD_Driver11setRotationEh
  .text._ZN10LCD_Driver9drawPixelEiij
-                0x000059d2       0x9c src/LCD_Driver.o
-                0x000059d2                _ZN10LCD_Driver9drawPixelEiij
+                0x0000592a       0x9c src/LCD_Driver.o
+                0x0000592a                _ZN10LCD_Driver9drawPixelEiij
  .text._ZN10LCD_Driver10fillScreenEj
-                0x00005a6e       0x46 src/LCD_Driver.o
-                0x00005a6e                _ZN10LCD_Driver10fillScreenEj
+                0x000059c6       0x46 src/LCD_Driver.o
+                0x000059c6                _ZN10LCD_Driver10fillScreenEj
  .text._ZN10LCD_Driver8writeStrEPc
-                0x00005ab4       0x3a src/LCD_Driver.o
-                0x00005ab4                _ZN10LCD_Driver8writeStrEPc
+                0x00005a0c       0x3a src/LCD_Driver.o
+                0x00005a0c                _ZN10LCD_Driver8writeStrEPc
  .text._ZN10MainScreenC2EP10LCD_Driver
-                0x00005aee        0x4 src/MainScreen.o
-                0x00005aee                _ZN10MainScreenC1EP10LCD_Driver
-                0x00005aee                _ZN10MainScreenC2EP10LCD_Driver
+                0x00005a46        0x4 src/MainScreen.o
+                0x00005a46                _ZN10MainScreenC1EP10LCD_Driver
+                0x00005a46                _ZN10MainScreenC2EP10LCD_Driver
  .text._ZN10MainScreen5clearEv
-                0x00005af2      0x202 src/MainScreen.o
-                0x00005af2                _ZN10MainScreen5clearEv
+                0x00005a4a      0x202 src/MainScreen.o
+                0x00005a4a                _ZN10MainScreen5clearEv
  .text._ZN10MainScreen4drawEN7OBDCMDS3CMDEP5BTOBD
-                0x00005cf4      0x29e src/MainScreen.o
-                0x00005cf4                _ZN10MainScreen4drawEN7OBDCMDS3CMDEP5BTOBD
+                0x00005c4c      0x29e src/MainScreen.o
+                0x00005c4c                _ZN10MainScreen4drawEN7OBDCMDS3CMDEP5BTOBD
  .text._ZN10MainScreen7drawGPSEN6GPSVAL3VALEP3GPS
-                0x00005f92      0x1c6 src/MainScreen.o
-                0x00005f92                _ZN10MainScreen7drawGPSEN6GPSVAL3VALEP3GPS
+                0x00005eea      0x1c6 src/MainScreen.o
+                0x00005eea                _ZN10MainScreen7drawGPSEN6GPSVAL3VALEP3GPS
  .text._ZN10MainScreen6updateEP5BTOBDP3GPS
-                0x00006158       0x7c src/MainScreen.o
-                0x00006158                _ZN10MainScreen6updateEP5BTOBDP3GPS
+                0x000060b0       0x7c src/MainScreen.o
+                0x000060b0                _ZN10MainScreen6updateEP5BTOBDP3GPS
  .text._ZN13OBDConversion4initEv
-                0x000061d4       0x16 src/OBDConversion.o
-                0x000061d4                _ZN13OBDConversion4initEv
+                0x0000612c       0x16 src/OBDConversion.o
+                0x0000612c                _ZN13OBDConversion4initEv
  .text._ZN13OBDConversion3hexEc
-                0x000061ea       0x10 src/OBDConversion.o
-                0x000061ea                _ZN13OBDConversion3hexEc
+                0x00006142       0x10 src/OBDConversion.o
+                0x00006142                _ZN13OBDConversion3hexEc
  .text._ZN13OBDConversion5speedEcc
-                0x000061fa       0x52 src/OBDConversion.o
-                0x000061fa                _ZN13OBDConversion5speedEcc
+                0x00006152       0x52 src/OBDConversion.o
+                0x00006152                _ZN13OBDConversion5speedEcc
  .text._ZN13OBDConversion3rpmEcccc
-                0x0000624c       0x64 src/OBDConversion.o
-                0x0000624c                _ZN13OBDConversion3rpmEcccc
+                0x000061a4       0x64 src/OBDConversion.o
+                0x000061a4                _ZN13OBDConversion3rpmEcccc
  .text._ZN13OBDConversion11engine_loadEcc
-                0x000062b0       0x36 src/OBDConversion.o
-                0x000062b0                _ZN13OBDConversion11engine_loadEcc
+                0x00006208       0x36 src/OBDConversion.o
+                0x00006208                _ZN13OBDConversion11engine_loadEcc
  .text._ZN13OBDConversion12throttle_posEcc
-                0x000062e6       0x36 src/OBDConversion.o
-                0x000062e6                _ZN13OBDConversion12throttle_posEcc
+                0x0000623e       0x36 src/OBDConversion.o
+                0x0000623e                _ZN13OBDConversion12throttle_posEcc
  .text.__vector_88
-                0x0000631c       0x58 src/RTVT.o
-                0x0000631c                __vector_88
+                0x00006274       0x58 src/RTVT.o
+                0x00006274                __vector_88
  .text.__vector_91
-                0x00006374       0x58 src/RTVT.o
-                0x00006374                __vector_91
+                0x000062cc       0x58 src/RTVT.o
+                0x000062cc                __vector_91
  .text.__vector_90
-                0x000063cc       0x14 src/RTVT.o
-                0x000063cc                __vector_90
+                0x00006324       0x14 src/RTVT.o
+                0x00006324                __vector_90
  .text.__vector_93
-                0x000063e0       0x14 src/RTVT.o
-                0x000063e0                __vector_93
+                0x00006338       0x14 src/RTVT.o
+                0x00006338                __vector_93
  .text.__vector_89
-                0x000063f4       0x58 src/RTVT.o
-                0x000063f4                __vector_89
+                0x0000634c       0x58 src/RTVT.o
+                0x0000634c                __vector_89
  .text.__vector_92
-                0x0000644c       0x58 src/RTVT.o
-                0x0000644c                __vector_92
+                0x000063a4       0x58 src/RTVT.o
+                0x000063a4                __vector_92
  .text.__vector_default
-                0x000064a4       0x16 src/RTVT.o
-                0x000064a4                __vector_default
+                0x000063fc       0x16 src/RTVT.o
+                0x000063fc                __vector_default
  .text.__vector_57
-                0x000064ba       0x14 src/RTVT.o
-                0x000064ba                __vector_57
+                0x00006412       0x14 src/RTVT.o
+                0x00006412                __vector_57
  .text.__vector_16
-                0x000064ce       0x96 src/RTVT.o
-                0x000064ce                __vector_16
+                0x00006426       0x96 src/RTVT.o
+                0x00006426                __vector_16
  .text.__vector_22
-                0x00006564       0x4a src/RTVT.o
-                0x00006564                __vector_22
+                0x000064bc       0x4a src/RTVT.o
+                0x000064bc                __vector_22
  .text._Z15setClockTo32MHzv
-                0x000065ae       0x20 src/RTVT.o
-                0x000065ae                _Z15setClockTo32MHzv
+                0x00006506       0x20 src/RTVT.o
+                0x00006506                _Z15setClockTo32MHzv
  .text._Z11open_appendP3FILPKc
-                0x000065ce       0x38 src/RTVT.o
-                0x000065ce                _Z11open_appendP3FILPKc
+                0x00006526       0x38 src/RTVT.o
+                0x00006526                _Z11open_appendP3FILPKc
  .text._Z7writeDPP3FIL
-                0x00006606      0x336 src/RTVT.o
-                0x00006606                _Z7writeDPP3FIL
- .text.main     0x0000693c      0x19a src/RTVT.o
-                0x0000693c                main
+                0x0000655e      0x32e src/RTVT.o
+                0x0000655e                _Z7writeDPP3FIL
+ .text.main     0x0000688c      0x194 src/RTVT.o
+                0x0000688c                main
  .text._ZN6ScreenC2EP10LCD_Driver
-                0x00006ad6        0x8 src/Screen.o
-                0x00006ad6                _ZN6ScreenC1EP10LCD_Driver
-                0x00006ad6                _ZN6ScreenC2EP10LCD_Driver
+                0x00006a20        0x8 src/Screen.o
+                0x00006a20                _ZN6ScreenC1EP10LCD_Driver
+                0x00006a20                _ZN6ScreenC2EP10LCD_Driver
  .text.get_fattime
-                0x00006ade        0xa src/SDCard.o
-                0x00006ade                get_fattime
+                0x00006a28        0xa src/SDCard.o
+                0x00006a28                get_fattime
  .text.disk_status
-                0x00006ae8       0x26 src/SDCard.o
-                0x00006ae8                disk_status
+                0x00006a32       0x26 src/SDCard.o
+                0x00006a32                disk_status
  .text._ZN6SDCardC2EP10SPI_struct
-                0x00006b0e       0x46 src/SDCard.o
-                0x00006b0e                _ZN6SDCardC2EP10SPI_struct
-                0x00006b0e                _ZN6SDCardC1EP10SPI_struct
+                0x00006a58       0x46 src/SDCard.o
+                0x00006a58                _ZN6SDCardC2EP10SPI_struct
+                0x00006a58                _ZN6SDCardC1EP10SPI_struct
  .text._ZN6SDCard13rcv_dataBlockEPVhj
-                0x00006b54       0xa6 src/SDCard.o
-                0x00006b54                _ZN6SDCard13rcv_dataBlockEPVhj
+                0x00006a9e       0xa6 src/SDCard.o
+                0x00006a9e                _ZN6SDCard13rcv_dataBlockEPVhj
  .text._ZN6SDCard10wait_readyEv
-                0x00006bfa       0x52 src/SDCard.o
-                0x00006bfa                _ZN6SDCard10wait_readyEv
+                0x00006b44       0x52 src/SDCard.o
+                0x00006b44                _ZN6SDCard10wait_readyEv
  .text._ZN6SDCard14send_dataBlockEPVKhh
-                0x00006c4c       0xb2 src/SDCard.o
-                0x00006c4c                _ZN6SDCard14send_dataBlockEPVKhh
+                0x00006b96       0xb2 src/SDCard.o
+                0x00006b96                _ZN6SDCard14send_dataBlockEPVKhh
  .text._ZN6SDCard6selectEv
-                0x00006cfe       0x3a src/SDCard.o
-                0x00006cfe                _ZN6SDCard6selectEv
+                0x00006c48       0x3a src/SDCard.o
+                0x00006c48                _ZN6SDCard6selectEv
  .text._ZN6SDCard8send_cmdEhm
-                0x00006d38      0x132 src/SDCard.o
-                0x00006d38                _ZN6SDCard8send_cmdEhm
+                0x00006c82      0x132 src/SDCard.o
+                0x00006c82                _ZN6SDCard8send_cmdEhm
  .text._ZN6SDCard4initEh
-                0x00006e6a      0x1be src/SDCard.o
-                0x00006e6a                _ZN6SDCard4initEh
+                0x00006db4      0x1be src/SDCard.o
+                0x00006db4                _ZN6SDCard4initEh
  .text.disk_initialize
-                0x00007028       0x1c src/SDCard.o
-                0x00007028                disk_initialize
+                0x00006f72       0x1c src/SDCard.o
+                0x00006f72                disk_initialize
  .text._ZN6SDCard4readEPVhmj
-                0x00007044       0xf8 src/SDCard.o
-                0x00007044                _ZN6SDCard4readEPVhmj
+                0x00006f8e       0xf8 src/SDCard.o
+                0x00006f8e                _ZN6SDCard4readEPVhmj
  .text.disk_read
-                0x0000713c       0x5c src/SDCard.o
-                0x0000713c                disk_read
+                0x00007086       0x5c src/SDCard.o
+                0x00007086                disk_read
  .text._ZN6SDCard5writeEPVKhmj
-                0x00007198      0x11e src/SDCard.o
-                0x00007198                _ZN6SDCard5writeEPVKhmj
+                0x000070e2      0x11e src/SDCard.o
+                0x000070e2                _ZN6SDCard5writeEPVKhmj
  .text.disk_write
-                0x000072b6       0x50 src/SDCard.o
-                0x000072b6                disk_write
+                0x00007200       0x50 src/SDCard.o
+                0x00007200                disk_write
  .text._ZN6SDCard5IOctlEhPv
-                0x00007306      0x3f4 src/SDCard.o
-                0x00007306                _ZN6SDCard5IOctlEhPv
+                0x00007250      0x3f4 src/SDCard.o
+                0x00007250                _ZN6SDCard5IOctlEhPv
  .text.disk_ioctl
-                0x000076fa       0x30 src/SDCard.o
-                0x000076fa                disk_ioctl
+                0x00007644       0x30 src/SDCard.o
+                0x00007644                disk_ioctl
  .text._GLOBAL__sub_I_sdcard
-                0x0000772a        0xc src/SDCard.o
+                0x00007674        0xc src/SDCard.o
  .text._ZN10SPI_DriverC2EP10SPI_struct
-                0x00007736       0x16 src/SPI_Driver.o
-                0x00007736                _ZN10SPI_DriverC2EP10SPI_struct
-                0x00007736                _ZN10SPI_DriverC1EP10SPI_struct
+                0x00007680       0x16 src/SPI_Driver.o
+                0x00007680                _ZN10SPI_DriverC2EP10SPI_struct
+                0x00007680                _ZN10SPI_DriverC1EP10SPI_struct
  .text._ZN10SPI_Driver9clockRateEc
-                0x0000774c       0x1a src/SPI_Driver.o
-                0x0000774c                _ZN10SPI_Driver9clockRateEc
+                0x00007696       0x1a src/SPI_Driver.o
+                0x00007696                _ZN10SPI_Driver9clockRateEc
  .text._ZN10SPI_Driver6enableEv
-                0x00007766        0xe src/SPI_Driver.o
-                0x00007766                _ZN10SPI_Driver6enableEv
+                0x000076b0        0xe src/SPI_Driver.o
+                0x000076b0                _ZN10SPI_Driver6enableEv
  .text._ZN10SPI_Driver3putEh
-                0x00007774       0x2a src/SPI_Driver.o
-                0x00007774                _ZN10SPI_Driver3putEh
+                0x000076be       0x2a src/SPI_Driver.o
+                0x000076be                _ZN10SPI_Driver3putEh
  .text._ZN10SPI_Driver3getEv
-                0x0000779e       0x1a src/SPI_Driver.o
-                0x0000779e                _ZN10SPI_Driver3getEv
+                0x000076e8       0x1a src/SPI_Driver.o
+                0x000076e8                _ZN10SPI_Driver3getEv
  .text._ZN10SPI_Driver12get_bufferedEPVh
-                0x000077b8       0x1e src/SPI_Driver.o
-                0x000077b8                _ZN10SPI_Driver12get_bufferedEPVh
+                0x00007702       0x1e src/SPI_Driver.o
+                0x00007702                _ZN10SPI_Driver12get_bufferedEPVh
  .text._ZN5Touch8getCycleEv
-                0x000077d6       0x20 src/Touch.o
-                0x000077d6                _ZN5Touch8getCycleEv
+                0x00007720       0x20 src/Touch.o
+                0x00007720                _ZN5Touch8getCycleEv
  .text._ZN5Touch6setupXEv
-                0x000077f6       0x46 src/Touch.o
-                0x000077f6                _ZN5Touch6setupXEv
+                0x00007740       0x46 src/Touch.o
+                0x00007740                _ZN5Touch6setupXEv
  .text._ZN5Touch6setupYEv
-                0x0000783c       0x32 src/Touch.o
-                0x0000783c                _ZN5Touch6setupYEv
+                0x00007786       0x32 src/Touch.o
+                0x00007786                _ZN5Touch6setupYEv
  .text._ZN5Touch7processEv
-                0x0000786e       0x52 src/Touch.o
-                0x0000786e                _ZN5Touch7processEv
+                0x000077b8       0x52 src/Touch.o
+                0x000077b8                _ZN5Touch7processEv
  .text._ZN5Touch4getXEv
-                0x000078c0        0x8 src/Touch.o
-                0x000078c0                _ZN5Touch4getXEv
+                0x0000780a        0x8 src/Touch.o
+                0x0000780a                _ZN5Touch4getXEv
  .text._ZN5Touch4getYEv
-                0x000078c8        0x8 src/Touch.o
-                0x000078c8                _ZN5Touch4getYEv
+                0x00007812        0x8 src/Touch.o
+                0x00007812                _ZN5Touch4getYEv
  .text._ZN10UartDriverC2Eii
-                0x000078d0       0x26 src/uart_driver.o
-                0x000078d0                _ZN10UartDriverC1Eii
-                0x000078d0                _ZN10UartDriverC2Eii
- .text._ZN10UartDriver4dumpEP3FIL
-                0x000078f6        0x8 src/uart_driver.o
-                0x000078f6                _ZN10UartDriver4dumpEP3FIL
+                0x0000781a       0x26 src/uart_driver.o
+                0x0000781a                _ZN10UartDriverC1Eii
+                0x0000781a                _ZN10UartDriverC2Eii
  .text._ZN10UartDriver4initEP12USART_structN10ParityMode5PMODEEN8CharSize6CHSIZEEbcc
-                0x000078fe       0xd2 src/uart_driver.o
-                0x000078fe                _ZN10UartDriver4initEP12USART_structN10ParityMode5PMODEEN8CharSize6CHSIZEEbcc
+                0x00007840       0xd2 src/uart_driver.o
+                0x00007840                _ZN10UartDriver4initEP12USART_structN10ParityMode5PMODEEN8CharSize6CHSIZEEbcc
  .text._ZN10UartDriver8sendByteEc
-                0x000079d0       0x2c src/uart_driver.o
-                0x000079d0                _ZN10UartDriver8sendByteEc
+                0x00007912       0x2c src/uart_driver.o
+                0x00007912                _ZN10UartDriver8sendByteEc
  .text._ZN10UartDriver7rcvByteEc
-                0x000079fc        0x8 src/uart_driver.o
-                0x000079fc                _ZN10UartDriver7rcvByteEc
+                0x0000793e        0x8 src/uart_driver.o
+                0x0000793e                _ZN10UartDriver7rcvByteEc
  .text._ZN10UartDriver9rxDequeueEv
-                0x00007a04        0x8 src/uart_driver.o
-                0x00007a04                _ZN10UartDriver9rxDequeueEv
+                0x00007946        0x8 src/uart_driver.o
+                0x00007946                _ZN10UartDriver9rxDequeueEv
  .text._ZN10UartDriver9rxIsEmptyEv
-                0x00007a0c        0x8 src/uart_driver.o
-                0x00007a0c                _ZN10UartDriver9rxIsEmptyEv
+                0x0000794e        0x8 src/uart_driver.o
+                0x0000794e                _ZN10UartDriver9rxIsEmptyEv
  .text._ZN10UartDriver9txIsEmptyEv
-                0x00007a14        0x8 src/uart_driver.o
-                0x00007a14                _ZN10UartDriver9txIsEmptyEv
+                0x00007956        0x8 src/uart_driver.o
+                0x00007956                _ZN10UartDriver9txIsEmptyEv
  .text._ZN10UartDriver9txDequeueEv
-                0x00007a1c        0x8 src/uart_driver.o
-                0x00007a1c                _ZN10UartDriver9txDequeueEv
+                0x0000795e        0x8 src/uart_driver.o
+                0x0000795e                _ZN10UartDriver9txDequeueEv
  .text._ZN10UartDriver11getUARTPortEv
-                0x00007a24        0x8 src/uart_driver.o
-                0x00007a24                _ZN10UartDriver11getUARTPortEv
+                0x00007966        0x8 src/uart_driver.o
+                0x00007966                _ZN10UartDriver11getUARTPortEv
  .text._ZN10UartDriver10sendStringEPKcih
-                0x00007a2c       0xce src/uart_driver.o
-                0x00007a2c                _ZN10UartDriver10sendStringEPKcih
+                0x0000796e       0xce src/uart_driver.o
+                0x0000796e                _ZN10UartDriver10sendStringEPKcih
  .text.avr-libc.fplib
-                0x00007afa        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixsfsi.o)
-                0x00007afa                __fixsfsi
+                0x00007a3c        0xa c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixsfsi.o)
+                0x00007a3c                __fixsfsi
  .text.avr-libc.fplib
-                0x00007b04       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixunssfsi.o)
-                0x00007b04                __fixunssfsi
+                0x00007a46       0x58 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fixunssfsi.o)
+                0x00007a46                __fixunssfsi
  .text.avr-libc.fplib
-                0x00007b5c       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(floatsisf.o)
-                0x00007b5c                __floatunsisf
-                0x00007b60                __floatsisf
+                0x00007a9e       0x7a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(floatsisf.o)
+                0x00007a9e                __floatunsisf
+                0x00007aa2                __floatsisf
  .text.avr-libc.fplib
-                0x00007bd6       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fp_split3.o)
-                0x00007bd6                __fp_split3
-                0x00007be6                __fp_splitA
+                0x00007b18       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fp_split3.o)
+                0x00007b18                __fp_split3
+                0x00007b28                __fp_splitA
  .text.avr-libc.fplib
-                0x00007c1a        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fp_zero.o)
-                0x00007c1a                __fp_zero
-                0x00007c1c                __fp_szero
+                0x00007b5c        0xe c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fp_zero.o)
+                0x00007b5c                __fp_zero
+                0x00007b5e                __fp_szero
  .text.avr-libc.fplib
-                0x00007c28        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(gesf2.o)
-                0x00007c28                __gesf2
-                0x00007c28                __gtsf2
+                0x00007b6a        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(gesf2.o)
+                0x00007b6a                __gesf2
+                0x00007b6a                __gtsf2
  .text.avr-libc.fplib
-                0x00007c30       0x48 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fp_cmp.o)
-                0x00007c30                __fp_cmp
+                0x00007b72       0x48 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libm.a(fp_cmp.o)
+                0x00007b72                __fp_cmp
  .text.libgcc.div
-                0x00007c78       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_udivmodsi4.o)
-                0x00007c78                __udivmodsi4
- .text.libgcc   0x00007cbc        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_tablejump.o)
-                0x00007cbc                __tablejump2__
-                0x00007cc0                __tablejump__
+                0x00007bba       0x44 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_udivmodsi4.o)
+                0x00007bba                __udivmodsi4
+ .text.libgcc   0x00007bfe        0xc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_tablejump.o)
+                0x00007bfe                __tablejump2__
+                0x00007c02                __tablejump__
  .text.libgcc.mul
-                0x00007cc8       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_umulhisi3.o)
-                0x00007cc8                __umulhisi3
+                0x00007c0a       0x1e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_umulhisi3.o)
+                0x00007c0a                __umulhisi3
  .text.libgcc.mul
-                0x00007ce6       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_muluhisi3.o)
-                0x00007ce6                __muluhisi3
- .text.libgcc   0x00007cfa        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_tablejump_elpm.o)
-                0x00007cfa                __tablejump_elpm__
+                0x00007c28       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_muluhisi3.o)
+                0x00007c28                __muluhisi3
+ .text.libgcc   0x00007c3c        0x8 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_tablejump_elpm.o)
+                0x00007c3c                __tablejump_elpm__
  .text.avr-libc
-                0x00007d02      0x24e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(malloc.o)
-                0x00007d02                malloc
-                0x00007e32                free
+                0x00007c44      0x24e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(malloc.o)
+                0x00007c44                malloc
+                0x00007d74                free
  .text.avr-libc
-                0x00007f50       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(itoa_ncheck.o)
-                0x00007f50                __itoa_ncheck
+                0x00007e92       0x14 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(itoa_ncheck.o)
+                0x00007e92                __itoa_ncheck
  .text.avr-libc
-                0x00007f64       0x32 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(utoa_ncheck.o)
-                0x00007f64                __utoa_ncheck
-                0x00007f66                __utoa_common
+                0x00007ea6       0x32 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(utoa_ncheck.o)
+                0x00007ea6                __utoa_ncheck
+                0x00007ea8                __utoa_common
  .text.avr-libc
-                0x00007f96       0x50 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(sprintf.o)
-                0x00007f96                sprintf
+                0x00007ed8       0x50 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(sprintf.o)
+                0x00007ed8                sprintf
  .text.avr-libc
-                0x00007fe6      0x3d0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(vfprintf_std.o)
-                0x00007fe6                vfprintf
+                0x00007f28      0x3d0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(vfprintf_std.o)
+                0x00007f28                vfprintf
  .text.avr-libc
-                0x000083b6       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(strnlen_P.o)
-                0x000083b6                strnlen_P
+                0x000082f8       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(strnlen_P.o)
+                0x000082f8                strnlen_P
  .text.avr-libc
-                0x000083cc       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(strnlen.o)
-                0x000083cc                strnlen
+                0x0000830e       0x16 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(strnlen.o)
+                0x0000830e                strnlen
  .text.avr-libc
-                0x000083e2       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(strrev.o)
-                0x000083e2                strrev
+                0x00008324       0x20 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(strrev.o)
+                0x00008324                strrev
  .text.avr-libc
-                0x00008402       0x64 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(fputc.o)
-                0x00008402                fputc
+                0x00008344       0x64 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(fputc.o)
+                0x00008344                fputc
  .text.avr-libc
-                0x00008466       0xbc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(ultoa_invert.o)
-                0x00008466                __ultoa_invert
-                0x00008522                . = ALIGN (0x2)
+                0x000083a8       0xbc c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(ultoa_invert.o)
+                0x000083a8                __ultoa_invert
+                0x00008464                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00008522        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_exit.o)
-                0x00008522                _exit
-                0x00008522                exit
+ .fini9         0x00008464        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_exit.o)
+                0x00008464                _exit
+                0x00008464                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -1340,11 +1336,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00008522        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_exit.o)
+ .fini0         0x00008464        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avrxmega6\libgcc.a(_exit.o)
  *(.fini0)
-                0x00008526                _etext = .
+                0x00008468                _etext = .
 
-.data           0x00802000      0x17a load address 0x00008526
+.data           0x00802000      0x15e load address 0x00008468
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x6 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(malloc.o)
@@ -1360,72 +1356,72 @@ END GROUP
                 0x00802035       0x16 src/Adafruit_GFX.o
                 0x00802035                _ZTV12Adafruit_GFX
  .rodata.str1.1
-                0x0080204b       0x15 src/BTOBD.o
+                0x0080204b        0xb src/BTOBD.o
  .rodata.str1.1
-                0x00802060        0xf src/ff.o
+                0x00802056        0xf src/ff.o
  .rodata.str1.1
-                0x0080206f       0x2f src/GPS.o
+                0x00802065       0x2f src/GPS.o
                                  0x32 (size before relaxing)
  .rodata._ZL11setupValues
-                0x0080209e       0x46 src/LCD_Driver.o
+                0x00802094       0x46 src/LCD_Driver.o
  .rodata._ZTV10LCD_Driver
-                0x008020e4       0x16 src/LCD_Driver.o
-                0x008020e4                _ZTV10LCD_Driver
+                0x008020da       0x16 src/LCD_Driver.o
+                0x008020da                _ZTV10LCD_Driver
  .rodata.str1.1
-                0x008020fa       0x2c src/MainScreen.o
+                0x008020f0       0x2c src/MainScreen.o
                                  0x30 (size before relaxing)
  .rodata.str1.1
-                0x00802126       0x54 src/RTVT.o
-                                 0x55 (size before relaxing)
+                0x0080211c       0x42 src/RTVT.o
+                                 0x43 (size before relaxing)
  *(.gnu.linkonce.d*)
-                0x0080217a                . = ALIGN (0x2)
-                0x0080217a                _edata = .
-                0x0080217a                PROVIDE (__data_end, .)
+                0x0080215e                . = ALIGN (0x2)
+                0x0080215e                _edata = .
+                0x0080215e                PROVIDE (__data_end, .)
 
-.bss            0x0080217a       0x1e
-                0x0080217a                PROVIDE (__bss_start, .)
+.bss            0x0080215e       0x1e
+                0x0080215e                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
- .bss.Fsid      0x0080217a        0x2 src/ff.o
- .bss.FatFs     0x0080217c        0x2 src/ff.o
+ .bss.Fsid      0x0080215e        0x2 src/ff.o
+ .bss.FatFs     0x00802160        0x2 src/ff.o
  .bss._ZN13OBDConversion2dpE
-                0x0080217e        0x5 src/OBDConversion.o
-                0x0080217e                _ZN13OBDConversion2dpE
+                0x00802162        0x5 src/OBDConversion.o
+                0x00802162                _ZN13OBDConversion2dpE
  .bss.numattempts
-                0x00802183        0x1 src/RTVT.o
-                0x00802183                numattempts
- .bss.wtoggle   0x00802184        0x1 src/RTVT.o
-                0x00802184                wtoggle
+                0x00802167        0x1 src/RTVT.o
+                0x00802167                numattempts
+ .bss.wtoggle   0x00802168        0x1 src/RTVT.o
+                0x00802168                wtoggle
  .bss.performWrite
-                0x00802185        0x1 src/RTVT.o
-                0x00802185                performWrite
+                0x00802169        0x1 src/RTVT.o
+                0x00802169                performWrite
  .bss.fileOpened
-                0x00802186        0x1 src/RTVT.o
-                0x00802186                fileOpened
- .bss.Touchref  0x00802187        0x2 src/RTVT.o
-                0x00802187                Touchref
- .bss.GPSref    0x00802189        0x2 src/RTVT.o
-                0x00802189                GPSref
- .bss.LCDref    0x0080218b        0x2 src/RTVT.o
-                0x0080218b                LCDref
- .bss.OBDref    0x0080218d        0x2 src/RTVT.o
-                0x0080218d                OBDref
- .bss.sdcard    0x0080218f        0x5 src/SDCard.o
-                0x0080218f                sdcard
+                0x0080216a        0x1 src/RTVT.o
+                0x0080216a                fileOpened
+ .bss.Touchref  0x0080216b        0x2 src/RTVT.o
+                0x0080216b                Touchref
+ .bss.GPSref    0x0080216d        0x2 src/RTVT.o
+                0x0080216d                GPSref
+ .bss.LCDref    0x0080216f        0x2 src/RTVT.o
+                0x0080216f                LCDref
+ .bss.OBDref    0x00802171        0x2 src/RTVT.o
+                0x00802171                OBDref
+ .bss.sdcard    0x00802173        0x5 src/SDCard.o
+                0x00802173                sdcard
  *(COMMON)
- COMMON         0x00802194        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(malloc.o)
-                0x00802194                __brkval
-                0x00802196                __flp
-                0x00802198                PROVIDE (__bss_end, .)
-                0x00008526                __data_load_start = LOADADDR (.data)
-                0x000086a0                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x00802178        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avrxmega6\libc.a(malloc.o)
+                0x00802178                __brkval
+                0x0080217a                __flp
+                0x0080217c                PROVIDE (__bss_end, .)
+                0x00008468                __data_load_start = LOADADDR (.data)
+                0x000085c6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00802198        0x0
-                0x00802198                PROVIDE (__noinit_start, .)
+.noinit         0x0080217c        0x0
+                0x0080217c                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x00802198                PROVIDE (__noinit_end, .)
-                0x00802198                _end = .
-                0x00802198                PROVIDE (__heap_start, .)
+                0x0080217c                PROVIDE (__noinit_end, .)
+                0x0080217c                _end = .
+                0x0080217c                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -1539,128 +1535,128 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x15594
+.debug_info     0x00000000    0x15463
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000     0x279e src/Adafruit_GFX.o
- .debug_info    0x0000279e     0x3135 src/BTOBD.o
- .debug_info    0x000058d3      0x2cc src/ByteArray.o
- .debug_info    0x00005b9f      0x889 src/ByteQueue.o
- .debug_info    0x00006428     0x30e1 src/ff.o
- .debug_info    0x00009509     0x1727 src/GPS.o
- .debug_info    0x0000ac30      0xfe3 src/LCD_Driver.o
- .debug_info    0x0000bc13     0x1fa7 src/MainScreen.o
- .debug_info    0x0000dbba      0x4f0 src/OBDConversion.o
- .debug_info    0x0000e0aa     0x34a6 src/RTVT.o
- .debug_info    0x00011550     0x1062 src/Screen.o
- .debug_info    0x000125b2     0x1676 src/SDCard.o
- .debug_info    0x00013c28      0x3df src/SPI_Driver.o
- .debug_info    0x00014007      0x9e3 src/Touch.o
- .debug_info    0x000149ea      0xbaa src/uart_driver.o
+ .debug_info    0x0000279e     0x3025 src/BTOBD.o
+ .debug_info    0x000057c3      0x2cc src/ByteArray.o
+ .debug_info    0x00005a8f      0x889 src/ByteQueue.o
+ .debug_info    0x00006318     0x30e1 src/ff.o
+ .debug_info    0x000093f9     0x1727 src/GPS.o
+ .debug_info    0x0000ab20      0xfe3 src/LCD_Driver.o
+ .debug_info    0x0000bb03     0x1fa2 src/MainScreen.o
+ .debug_info    0x0000daa5      0x4f0 src/OBDConversion.o
+ .debug_info    0x0000df95     0x348f src/RTVT.o
+ .debug_info    0x00011424     0x105d src/Screen.o
+ .debug_info    0x00012481     0x1676 src/SDCard.o
+ .debug_info    0x00013af7      0x3df src/SPI_Driver.o
+ .debug_info    0x00013ed6      0x9e3 src/Touch.o
+ .debug_info    0x000148b9      0xbaa src/uart_driver.o
 
-.debug_abbrev   0x00000000     0x316b
+.debug_abbrev   0x00000000     0x3154
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x35a src/Adafruit_GFX.o
- .debug_abbrev  0x0000035a      0x51b src/BTOBD.o
- .debug_abbrev  0x00000875      0x1af src/ByteArray.o
- .debug_abbrev  0x00000a24      0x31a src/ByteQueue.o
- .debug_abbrev  0x00000d3e      0x2dd src/ff.o
- .debug_abbrev  0x0000101b      0x455 src/GPS.o
- .debug_abbrev  0x00001470      0x368 src/LCD_Driver.o
- .debug_abbrev  0x000017d8      0x45a src/MainScreen.o
- .debug_abbrev  0x00001c32      0x17b src/OBDConversion.o
- .debug_abbrev  0x00001dad      0x5c5 src/RTVT.o
- .debug_abbrev  0x00002372      0x306 src/Screen.o
- .debug_abbrev  0x00002678      0x3e2 src/SDCard.o
- .debug_abbrev  0x00002a5a      0x1e8 src/SPI_Driver.o
- .debug_abbrev  0x00002c42      0x255 src/Touch.o
- .debug_abbrev  0x00002e97      0x2d4 src/uart_driver.o
+ .debug_abbrev  0x0000035a      0x504 src/BTOBD.o
+ .debug_abbrev  0x0000085e      0x1af src/ByteArray.o
+ .debug_abbrev  0x00000a0d      0x31a src/ByteQueue.o
+ .debug_abbrev  0x00000d27      0x2dd src/ff.o
+ .debug_abbrev  0x00001004      0x455 src/GPS.o
+ .debug_abbrev  0x00001459      0x368 src/LCD_Driver.o
+ .debug_abbrev  0x000017c1      0x45a src/MainScreen.o
+ .debug_abbrev  0x00001c1b      0x17b src/OBDConversion.o
+ .debug_abbrev  0x00001d96      0x5c5 src/RTVT.o
+ .debug_abbrev  0x0000235b      0x306 src/Screen.o
+ .debug_abbrev  0x00002661      0x3e2 src/SDCard.o
+ .debug_abbrev  0x00002a43      0x1e8 src/SPI_Driver.o
+ .debug_abbrev  0x00002c2b      0x255 src/Touch.o
+ .debug_abbrev  0x00002e80      0x2d4 src/uart_driver.o
 
-.debug_line     0x00000000     0x6d4e
+.debug_line     0x00000000     0x6d12
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x993 src/Adafruit_GFX.o
- .debug_line    0x00000993      0xc8e src/BTOBD.o
- .debug_line    0x00001621      0x1b1 src/ByteArray.o
- .debug_line    0x000017d2      0x20e src/ByteQueue.o
- .debug_line    0x000019e0     0x2364 src/ff.o
- .debug_line    0x00003d44      0x65c src/GPS.o
- .debug_line    0x000043a0      0x6c1 src/LCD_Driver.o
- .debug_line    0x00004a61      0x54d src/MainScreen.o
- .debug_line    0x00004fae      0x1a0 src/OBDConversion.o
- .debug_line    0x0000514e      0x829 src/RTVT.o
- .debug_line    0x00005977      0x1b8 src/Screen.o
- .debug_line    0x00005b2f      0x967 src/SDCard.o
- .debug_line    0x00006496      0x24d src/SPI_Driver.o
- .debug_line    0x000066e3      0x2f9 src/Touch.o
- .debug_line    0x000069dc      0x372 src/uart_driver.o
+ .debug_line    0x00000993      0xc66 src/BTOBD.o
+ .debug_line    0x000015f9      0x1b1 src/ByteArray.o
+ .debug_line    0x000017aa      0x20e src/ByteQueue.o
+ .debug_line    0x000019b8     0x2364 src/ff.o
+ .debug_line    0x00003d1c      0x65c src/GPS.o
+ .debug_line    0x00004378      0x6c1 src/LCD_Driver.o
+ .debug_line    0x00004a39      0x54d src/MainScreen.o
+ .debug_line    0x00004f86      0x1a0 src/OBDConversion.o
+ .debug_line    0x00005126      0x815 src/RTVT.o
+ .debug_line    0x0000593b      0x1b8 src/Screen.o
+ .debug_line    0x00005af3      0x967 src/SDCard.o
+ .debug_line    0x0000645a      0x24d src/SPI_Driver.o
+ .debug_line    0x000066a7      0x2f9 src/Touch.o
+ .debug_line    0x000069a0      0x372 src/uart_driver.o
 
-.debug_frame    0x00000000     0x24a8
+.debug_frame    0x00000000     0x248c
  *(.debug_frame)
  .debug_frame   0x00000000      0x7bc src/Adafruit_GFX.o
- .debug_frame   0x000007bc      0x2d0 src/BTOBD.o
- .debug_frame   0x00000a8c       0x70 src/ByteArray.o
- .debug_frame   0x00000afc       0xcc src/ByteQueue.o
- .debug_frame   0x00000bc8      0x9c8 src/ff.o
- .debug_frame   0x00001590      0x21c src/GPS.o
- .debug_frame   0x000017ac      0x244 src/LCD_Driver.o
- .debug_frame   0x000019f0      0x108 src/MainScreen.o
- .debug_frame   0x00001af8       0xac src/OBDConversion.o
- .debug_frame   0x00001ba4      0x2fc src/RTVT.o
- .debug_frame   0x00001ea0       0x44 src/Screen.o
- .debug_frame   0x00001ee4      0x344 src/SDCard.o
- .debug_frame   0x00002228       0xa4 src/SPI_Driver.o
- .debug_frame   0x000022cc       0xb0 src/Touch.o
- .debug_frame   0x0000237c      0x12c src/uart_driver.o
+ .debug_frame   0x000007bc      0x2b4 src/BTOBD.o
+ .debug_frame   0x00000a70       0x70 src/ByteArray.o
+ .debug_frame   0x00000ae0       0xcc src/ByteQueue.o
+ .debug_frame   0x00000bac      0x9c8 src/ff.o
+ .debug_frame   0x00001574      0x21c src/GPS.o
+ .debug_frame   0x00001790      0x244 src/LCD_Driver.o
+ .debug_frame   0x000019d4      0x108 src/MainScreen.o
+ .debug_frame   0x00001adc       0xac src/OBDConversion.o
+ .debug_frame   0x00001b88      0x2fc src/RTVT.o
+ .debug_frame   0x00001e84       0x44 src/Screen.o
+ .debug_frame   0x00001ec8      0x344 src/SDCard.o
+ .debug_frame   0x0000220c       0xa4 src/SPI_Driver.o
+ .debug_frame   0x000022b0       0xb0 src/Touch.o
+ .debug_frame   0x00002360      0x12c src/uart_driver.o
 
-.debug_str      0x00000000     0x6426
+.debug_str      0x00000000     0x6422
  *(.debug_str)
  .debug_str     0x00000000      0x7a8 src/Adafruit_GFX.o
                                 0x856 (size before relaxing)
- .debug_str     0x000007a8      0xc33 src/BTOBD.o
-                                0xeb4 (size before relaxing)
- .debug_str     0x000013db       0x51 src/ByteArray.o
+ .debug_str     0x000007a8      0xc1b src/BTOBD.o
+                                0xe9c (size before relaxing)
+ .debug_str     0x000013c3       0x51 src/ByteArray.o
                                 0x1e2 (size before relaxing)
- .debug_str     0x0000142c       0x3a src/ByteQueue.o
+ .debug_str     0x00001414       0x4e src/ByteQueue.o
                                 0x410 (size before relaxing)
- .debug_str     0x00001466     0x3d9b src/ff.o
+ .debug_str     0x00001462     0x3d9b src/ff.o
                                0x3fa8 (size before relaxing)
- .debug_str     0x00005201      0x24f src/GPS.o
+ .debug_str     0x000051fd      0x24f src/GPS.o
                                 0x9a2 (size before relaxing)
- .debug_str     0x00005450      0x2d0 src/LCD_Driver.o
+ .debug_str     0x0000544c      0x2d0 src/LCD_Driver.o
                                 0x54d (size before relaxing)
- .debug_str     0x00005720      0x133 src/MainScreen.o
-                               0x11c9 (size before relaxing)
- .debug_str     0x00005853       0x30 src/OBDConversion.o
+ .debug_str     0x0000571c      0x133 src/MainScreen.o
+                               0x11c5 (size before relaxing)
+ .debug_str     0x0000584f       0x30 src/OBDConversion.o
                                 0x49c (size before relaxing)
- .debug_str     0x00005883      0x6da src/RTVT.o
-                               0x1b3e (size before relaxing)
- .debug_str     0x00005f5d       0x2d src/Screen.o
-                                0xd3d (size before relaxing)
- .debug_str     0x00005f8a      0x2fd src/SDCard.o
+ .debug_str     0x0000587f      0x6da src/RTVT.o
+                               0x1b3a (size before relaxing)
+ .debug_str     0x00005f59       0x2d src/Screen.o
+                                0xd39 (size before relaxing)
+ .debug_str     0x00005f86      0x2fd src/SDCard.o
                                 0x678 (size before relaxing)
- .debug_str     0x00006287       0x46 src/SPI_Driver.o
+ .debug_str     0x00006283       0x46 src/SPI_Driver.o
                                 0x318 (size before relaxing)
- .debug_str     0x000062cd       0xdd src/Touch.o
+ .debug_str     0x000062c9       0xdd src/Touch.o
                                 0x509 (size before relaxing)
- .debug_str     0x000063aa       0x7c src/uart_driver.o
+ .debug_str     0x000063a6       0x7c src/uart_driver.o
                                 0x6c7 (size before relaxing)
 
-.debug_loc      0x00000000     0xcab6
+.debug_loc      0x00000000     0xc9f1
  *(.debug_loc)
  .debug_loc     0x00000000     0x31e9 src/Adafruit_GFX.o
- .debug_loc     0x000031e9     0x152e src/BTOBD.o
- .debug_loc     0x00004717      0x155 src/ByteArray.o
- .debug_loc     0x0000486c      0x3a9 src/ByteQueue.o
- .debug_loc     0x00004c15     0x3d0b src/ff.o
- .debug_loc     0x00008920      0x97d src/GPS.o
- .debug_loc     0x0000929d      0xba4 src/LCD_Driver.o
- .debug_loc     0x00009e41      0x679 src/MainScreen.o
- .debug_loc     0x0000a4ba      0x2fb src/OBDConversion.o
- .debug_loc     0x0000a7b5      0x7b2 src/RTVT.o
- .debug_loc     0x0000af67       0x36 src/Screen.o
- .debug_loc     0x0000af9d     0x1267 src/SDCard.o
- .debug_loc     0x0000c204      0x181 src/SPI_Driver.o
- .debug_loc     0x0000c385      0x1c7 src/Touch.o
- .debug_loc     0x0000c54c      0x56a src/uart_driver.o
+ .debug_loc     0x000031e9     0x145e src/BTOBD.o
+ .debug_loc     0x00004647      0x155 src/ByteArray.o
+ .debug_loc     0x0000479c      0x3a9 src/ByteQueue.o
+ .debug_loc     0x00004b45     0x3d0b src/ff.o
+ .debug_loc     0x00008850      0x97d src/GPS.o
+ .debug_loc     0x000091cd      0xba4 src/LCD_Driver.o
+ .debug_loc     0x00009d71      0x684 src/MainScreen.o
+ .debug_loc     0x0000a3f5      0x2fb src/OBDConversion.o
+ .debug_loc     0x0000a6f0      0x7b2 src/RTVT.o
+ .debug_loc     0x0000aea2       0x36 src/Screen.o
+ .debug_loc     0x0000aed8     0x1267 src/SDCard.o
+ .debug_loc     0x0000c13f      0x181 src/SPI_Driver.o
+ .debug_loc     0x0000c2c0      0x1c7 src/Touch.o
+ .debug_loc     0x0000c487      0x56a src/uart_driver.o
 
 .debug_macinfo
  *(.debug_macinfo)
